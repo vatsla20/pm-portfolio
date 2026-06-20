@@ -6,19 +6,19 @@ export default function About() {
         <div className="w-16 h-1 bg-accent rounded mb-10" />
 
         <div className="grid md:grid-cols-3 gap-10">
-          {/* Main story */}
           <div className="md:col-span-2 space-y-6">
             <div>
               <h3 className="text-lg font-semibold mb-3 text-accent-light">
                 My Story
               </h3>
               <p className="text-muted leading-relaxed">
-                {/* PLACEHOLDER: Replace with your story */}
-                I started my career in [your field], where I [what you did and
-                achieved]. Over time, I found myself drawn to the work that sat
-                at the intersection of user needs, business goals, and technical
-                feasibility — the work that, I later realized, is product
-                management.
+                I started my career at SAP as a full-stack developer, building
+                and shipping AI/ML-powered products end-to-end — from database
+                design and backend architecture to frontend performance and
+                cloud security. Over time I noticed that the moments I found
+                most energising weren't the ones where I wrote the most code,
+                but the ones where I was figuring out what to build, for whom,
+                and why it mattered.
               </p>
             </div>
 
@@ -27,11 +27,15 @@ export default function About() {
                 The Pivot
               </h3>
               <p className="text-muted leading-relaxed">
-                {/* PLACEHOLDER: Replace with your pivot moment */}
-                When I led [specific initiative], I naturally stepped into the PM
-                role: talking to users, defining requirements, prioritizing
-                features, and coordinating across teams to ship on time. That
-                experience made it clear — product management is where I belong.
+                When I owned the full product lifecycle for SAP API Management's
+                Anomaly Detection and Signavio Process Intelligence platforms —
+                scoping requirements, designing data flows, coordinating across
+                infra and AI teams, and driving releases from zero — I was
+                already doing product management. That became undeniable when I
+                won SAP's Invent for Customer hackathon, where the edge wasn't
+                technical execution but clearly defining a user problem and
+                building the right solution for it. Product management is where
+                I belong.
               </p>
             </div>
 
@@ -40,39 +44,35 @@ export default function About() {
                 What I&apos;m Looking For
               </h3>
               <p className="text-muted leading-relaxed">
-                {/* PLACEHOLDER: Replace with your target */}
-                I&apos;m seeking product roles where I can [your goal — e.g.,
-                &quot;drive 0-to-1 initiatives&quot;, &quot;improve user
-                experiences at scale&quot;, &quot;work on B2B SaaS
-                products&quot;]. I thrive in environments that value user
-                empathy, data-informed decisions, and iterative development.
+                I'm seeking PM roles in B2B SaaS or enterprise AI products —
+                where deep technical fluency is an advantage, not just a
+                nice-to-have. I thrive where user empathy, data-informed
+                decisions, and iterative shipping are the operating model.
               </p>
             </div>
           </div>
 
-          {/* What I bring sidebar */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold mb-3 text-accent-light">
               What I Bring
             </h3>
 
-            {/* PLACEHOLDER: Replace with your actual strengths */}
             {[
               {
-                title: "Domain Expertise",
-                desc: "[Your field] gives me deep product intuition in [area]",
+                title: "Technical depth",
+                desc: "4+ years shipping full-stack AI/ML products at SAP gives me the ability to evaluate feasibility, spot scope creep, and earn engineering trust on day one.",
               },
               {
-                title: "Data Analysis",
-                desc: "Built dashboards and made data-informed decisions for [context]",
+                title: "End-to-end product ownership",
+                desc: "Drove complete release lifecycles — from requirements and architecture through delivery and post-launch — on multi-tenant enterprise platforms used at scale.",
               },
               {
-                title: "Stakeholder Management",
-                desc: "Aligned cross-functional teams around shared goals at [context]",
+                title: "Cross-functional execution",
+                desc: "Coordinated across AI, infra, security, and frontend teams while automating workflows that reduced operational overhead by up to 90%.",
               },
               {
-                title: "User Empathy",
-                desc: "Conducted [X]+ user interviews and synthesized insights into action",
+                title: "Customer & problem focus",
+                desc: "Won SAP's Invent for Customer award and holds a patent-pending identity verification architecture — both anchored in solving real user problems, not just shipping features.",
               },
             ].map((item) => (
               <div

@@ -1,25 +1,38 @@
 const skills = {
   "Product Skills": [
-    "User Research & Discovery",
-    "Roadmap Planning",
-    "Prioritization (RICE, MoSCoW)",
-    "PRD & Spec Writing",
-    "A/B Testing & Experimentation",
-    "Data Analysis & Metrics",
+    "Product lifecycle management",
+    "Roadmap planning",
+    "Requirements & PRD writing",
+    "Prioritisation (RICE, MoSCoW)",
+    "Metrics & KPI definition",
+    "User research & discovery",
+    "0-to-1 product development",
   ],
   Methodologies: [
     "Agile / Scrum",
-    "Design Thinking",
-    "Jobs-to-be-Done (JTBD)",
+    "Design thinking",
     "OKRs",
-    "User Story Mapping",
+    "Jobs-to-be-done (JTBD)",
+    "Multi-tenant SaaS architecture",
+    "API-first product design",
+  ],
+  "Technical Fluency": [
+    "Java / Spring Boot",
+    "Python",
+    "JavaScript",
+    "GenAI / LLM / RAG",
+    "SQL / SAP HANA",
+    "Cloud & microservices",
+    "REST APIs",
+    "Bash / automation scripting",
   ],
   Tools: [
     "Jira",
+    "Confluence",
     "Figma",
     "SQL",
-    "Claude Code",
-    "Confluence",
+    "SAP BTP / HANA Cloud",
+    "Git / GitHub",
   ],
 };
 
@@ -49,12 +62,6 @@ export default function Skills() {
             </div>
           ))}
         </div>
-
-        <p className="text-xs text-muted/60 mt-8 italic">
-          {/* PLACEHOLDER: Customize this note */}
-          Note: Only listing skills I can speak to in depth during an interview.
-          Replace/add items that reflect your actual experience.
-        </p>
       </div>
     </section>
   );

@@ -1,31 +1,43 @@
 const projects = [
   {
-    title: "[Project 1 Name]",
-    outcome: "Reduced onboarding drop-off by 35% through redesigned user flow",
-    role: "Led",
-    domain: "B2B SaaS",
-    tags: ["User Research", "Roadmap", "A/B Testing"],
-    description:
-      "Identified a critical friction point in the onboarding process through user interviews and funnel analysis. Defined the problem space, proposed solutions, and coordinated with engineering and design to ship an improved flow.",
-  },
-  {
-    title: "[Project 2 Name]",
+    title: "AI Anomaly Detection & Forecasting Platform — 0 to 1",
     outcome:
-      "Launched internal tool that saved 10 hrs/week for the operations team",
-    role: "Co-led",
-    domain: "Internal Tool",
-    tags: ["Process Improvement", "Stakeholder Mgmt", "Specs"],
+      "Shipped a production AI/ML SaaS product end-to-end — from zero requirements to live multi-tenant deployment — within SAP API Management",
+    role: "Led",
+    domain: "Enterprise SaaS",
+    tags: ["0-to-1 product", "Roadmap ownership", "Cross-functional coordination", "Multi-tenant architecture", "AI/ML integration", "Release management"],
     description:
-      "Recognized an operational bottleneck affecting team productivity. Wrote the requirements, prioritized features using RICE, and managed the build with a 2-person engineering team across 3 sprints.",
+      "The problem: SAP API Management lacked intelligent anomaly detection, leaving customers reactive to API failures. I owned the complete product lifecycle — writing requirements, designing the data architecture in CAP CDS, coordinating across AI, infra, security, and frontend teams, and managing releases across a multi-tenant, multi-instance environment. I defined data flows for IaaS platform communication, implemented authentication and authorisation, and managed large-scale training and inference pipelines with end-to-end data integrity guarantees. This was a greenfield product: no blueprint, no existing codebase — just a customer need and a team to coordinate.",
   },
   {
-    title: "[Project 3 Name]",
-    outcome: "Defined product strategy for new market segment worth $2M ARR",
-    role: "Contributed",
-    domain: "Growth",
-    tags: ["Market Research", "Strategy", "GTM"],
+    title: "Invent for Customer — AI Candidate Verification System",
+    outcome:
+      "Won SAP's company-wide Invent for Customer hackathon — judged on customer impact, feasibility, and innovation",
+    role: "Led · 🏆 Winner",
+    domain: "HR Tech / GenAI",
+    tags: ["Customer discovery", "Problem framing", "GenAI", "0-to-1 execution", "Business case", "Patent pending"],
     description:
-      "Conducted competitive analysis and user interviews to validate a new market opportunity. Created the business case and feature requirements that informed the product roadmap for the next two quarters.",
+      "The problem: candidate verification in hiring is slow, fraud-prone, and document-heavy — costing recruiters hours per hire. I led problem discovery, defined the solution scope, and built an AI-based verification system that reconciles candidate documents using phonetic name fusion and graph-based consistency analysis. The win wasn't the technical execution — it was identifying the right customer pain, framing the right solution, and making a compelling case for its business value. This is the foundation of my patent-pending identity verification architecture.",
+  },
+  {
+    title: "Tenant Decommissioning Automation — Operational Risk Elimination",
+    outcome:
+      "Reduced decommissioning turnaround time by 90% · Eliminated manual error risk · Enforced governance at every step",
+    role: "Led",
+    domain: "Platform / Internal Tool",
+    tags: ["Process improvement", "Risk identification", "Workflow automation", "Governance design", "Stakeholder alignment"],
+    description:
+      "The problem: tenant decommissioning at SAP Signavio was entirely manual — no audit trail, no standard process, slow execution, and a growing liability as the platform scaled. I identified this as an unacceptable operational risk, made the case for automation, and architected a governed workflow with built-in audit controls. The result transformed a multi-hour, error-prone process into a reliable, repeatable system. This is a textbook PM motion: spot a silent pain point, quantify the risk, define the solution, and ship it.",
+  },
+  {
+    title: "LLM + RAG Conversational Analytics Tool for API Management",
+    outcome:
+      "Extended the API Management platform with natural-language querying — reducing time-to-insight for API performance monitoring",
+    role: "Led",
+    domain: "Developer Tools / AI",
+    tags: ["User insight gap", "LLM / RAG", "Platform extension", "Self-initiated", "Recommendation systems"],
+    description:
+      "The problem: API performance data lived in dashboards that required users to know exactly what to look for. I identified this as a usability gap — power users were spending disproportionate time hunting for insights. I designed and built an LLM + RAG-based conversational tool that let users query API analytics in plain language, and paired it with a recommendation engine that surfaced contextual guidance for anomaly scenarios. The project required no stakeholder mandate — I saw the gap, defined the solution, and shipped it as a platform extension.",
   },
 ];
 
@@ -82,17 +94,6 @@ export default function Projects() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Case study CTA */}
-        <div className="mt-12 p-6 rounded-xl border border-dashed border-border text-center">
-          <p className="text-sm text-muted mb-2">
-            Each project above expands into a full case study with:
-          </p>
-          <p className="text-xs text-muted/70">
-            Problem → Discovery & Research → Solution → Execution → Results →
-            Reflections
-          </p>
         </div>
       </div>
     </section>

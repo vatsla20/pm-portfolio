@@ -5,6 +5,7 @@ const articles = [
     description:
       "What it does well, where it falls short, and what I'd change — with measurable success criteria.",
     status: "Draft",
+    link: null,
   },
   {
     title: "[How I'd Improve X — Feature Proposal]",
@@ -12,20 +13,23 @@ const articles = [
     description:
       "A detailed feature proposal for [product you use], including user segments, prioritization, and success metrics.",
     status: "Draft",
+    link: null,
   },
   {
-    title: "[What My Previous Field Taught Me About Product]",
+    title: "The Gap Between Building a Feature and Building a Product",
     type: "Opinion",
     description:
-      "How [your background] built transferable PM skills: stakeholder management, prioritization under constraints, and user empathy.",
-    status: "Draft",
+      "How building an EdTech product during COVID taught me the difference between solving for a moment vs. building for a long term market trajectory.",
+    status: "Published",
+    link: "/documents/market-gap.html",
   },
   {
-    title: "[Mini-PRD: Feature Idea for a Product You Love]",
+    title: "DentistGPT - Product Requirements Document",
     type: "PRD",
     description:
-      "A lightweight product requirements document covering problem statement, user stories, scope, and success metrics.",
-    status: "Draft",
+      "A comprehensive PRD for a WhatsApp-based AI assistant that automates appointment scheduling for dental clinics, including technical architecture, Mermaid diagrams, and implementation roadmap.",
+    status: "Published",
+    link: "/documents/PRD.html",
   },
 ];
 
@@ -49,29 +53,47 @@ export default function Writing() {
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {articles.map((article, index) => (
-            <article
-              key={index}
-              className="group p-5 rounded-xl bg-surface border border-border hover:border-accent/40 transition-all duration-300"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <span
-                  className={`px-2 py-0.5 text-xs rounded border ${typeColors[article.type] || "bg-surface-light text-muted"}`}
-                >
-                  {article.type}
-                </span>
-                <span className="text-xs text-muted/60 italic">
-                  {article.status}
-                </span>
-              </div>
-              <h3 className="text-base font-semibold text-foreground group-hover:text-accent-light transition-colors mb-2">
-                {article.title}
-              </h3>
-              <p className="text-sm text-muted leading-relaxed">
-                {article.description}
-              </p>
-            </article>
-          ))}
+          {articles.map((article, index) => {
+            const ArticleWrapper = article.link ? 'a' : 'article';
+            const wrapperProps = article.link
+              ? { href: article.link, target: "_blank", rel: "noopener noreferrer" }
+              : {};
+
+            return (
+              <ArticleWrapper
+                key={index}
+                {...wrapperProps}
+                className="group p-5 rounded-xl bg-surface border border-border hover:border-accent/40 transition-all duration-300 cursor-pointer"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span
+                    className={`px-2 py-0.5 text-xs rounded border ${typeColors[article.type] || "bg-surface-light text-muted"}`}
+                  >
+                    {article.type}
+                  </span>
+                  <span className="text-xs text-muted/60 italic">
+                    {article.status}
+                  </span>
+                </div>
+                <h3 className="text-base font-semibold text-foreground group-hover:text-accent-light transition-colors mb-2">
+                  {article.title}
+                  {article.link && (
+                    <svg
+                      className="inline-block ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  )}
+                </h3>
+                <p className="text-sm text-muted leading-relaxed">
+                  {article.description}
+                </p>
+              </ArticleWrapper>
+            );
+          })}
         </div>
 
         {/* Tip for the user */}
