@@ -5,8 +5,6 @@ const skills = {
     "Prioritization (RICE, MoSCoW)",
     "PRD & Spec Writing",
     "A/B Testing & Experimentation",
-    "Stakeholder Management",
-    "Go-to-Market Strategy",
     "Data Analysis & Metrics",
   ],
   Methodologies: [
@@ -14,17 +12,13 @@ const skills = {
     "Design Thinking",
     "Jobs-to-be-Done (JTBD)",
     "OKRs",
-    "Lean Startup",
     "User Story Mapping",
   ],
   Tools: [
     "Jira",
     "Figma",
-    "Notion",
     "SQL",
-    "Google Analytics",
-    "Mixpanel",
-    "Miro",
+    "Claude Code",
     "Confluence",
   ],
 };

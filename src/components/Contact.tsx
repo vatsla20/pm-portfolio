@@ -6,17 +6,13 @@ export default function Contact() {
         <div className="w-16 h-1 bg-accent rounded mx-auto mb-8" />
 
         <p className="text-muted leading-relaxed mb-8">
-          {/* PLACEHOLDER: Customize your CTA */}
           I&apos;m actively exploring product management opportunities and would love
-          to chat about [type of role — e.g., &quot;Associate PM or PM roles in B2B
-          SaaS&quot;], particularly in [industry interest — e.g., &quot;health-tech,
-          developer tools, or marketplace products&quot;].
+          to chat about the opportunities particularly in B2B SaaS industry, AI-powered enterprise products, and platform solutions, particularly in developer tools, enterprise AI, and data-driven products.
         </p>
 
-        <div className="grid sm:grid-cols-3 gap-4 mb-10">
-          {/* PLACEHOLDER: Replace with your actual links */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <a
-            href="mailto:your.email@example.com"
+            href="mailto:vatsla20.k@gmail.com"
             className="p-4 rounded-xl bg-surface border border-border hover:border-accent/40 transition-all duration-300 group"
           >
             <div className="text-accent group-hover:text-accent-light mb-2">
@@ -35,11 +31,11 @@ export default function Contact() {
               </svg>
             </div>
             <p className="text-sm font-medium text-foreground">Email</p>
-            <p className="text-xs text-muted mt-1">your.email@example.com</p>
+            <p className="text-xs text-muted mt-1">vatsla20.k@gmail.com</p>
           </a>
 
           <a
-            href="https://linkedin.com/in/YOUR-LINKEDIN"
+            href="https://www.linkedin.com/in/vatsla-khurana-025845214/"
             target="_blank"
             rel="noopener noreferrer"
             className="p-4 rounded-xl bg-surface border border-border hover:border-accent/40 transition-all duration-300 group"
@@ -57,24 +53,6 @@ export default function Contact() {
             <p className="text-xs text-muted mt-1">/in/vatsla-khurana</p>
           </a>
 
-          <a
-            href="https://twitter.com/YOUR-TWITTER"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-4 rounded-xl bg-surface border border-border hover:border-accent/40 transition-all duration-300 group"
-          >
-            <div className="text-accent group-hover:text-accent-light mb-2">
-              <svg
-                className="w-6 h-6 mx-auto"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-            </div>
-            <p className="text-sm font-medium text-foreground">Twitter / X</p>
-            <p className="text-xs text-muted mt-1">@your-handle</p>
-          </a>
         </div>
 
         <p className="text-xs text-muted/60">
