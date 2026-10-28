@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Feature That Made Me Quit Rapido</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; line-height:1.6; color:#333; background:#fafafa; padding:20px; }
+.container { max-width:820px; margin:0 auto; background:#fff; padding:48px; box-shadow:0 2px 8px rgba(0,0,0,0.1); border-radius:8px; }
+h1 { font-size:2.2rem; margin-bottom:1rem; color:#1a1a1a; line-height:1.2; }
+h2 { font-size:1.4rem; margin:1.8rem 0 0.6rem; color:#1a1a1a; }
+p { margin:0.9rem 0; font-size:1.02rem; }
+p.closing { font-style:italic; color:#555; border-left:4px solid #3498db; background:#f1f6fb; padding:0.8rem 1rem; border-radius:0 4px 4px 0; }
+.counter { display:inline-block; background:#fdecea; color:#c0392b; font-weight:600; padding:0.1rem 0.5rem; border-radius:4px; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>The feature that made me quit Rapido</h1>
+
+<p>I was standing on a Bangalore footpath at 6:40pm, in exactly the kind of moment a ride-hailing app is built for. It was peak hour, there was no auto in sight, and I had somewhere to be. I opened Rapido, booked a ride, and waited. A line of text then appeared on the screen to keep me informed while the app searched for a captain.</p>
+
+<p>It read: <span class="counter">28 / 60 drivers rejected your ride</span>.</p>
+
+<p>And then it kept counting. The number climbed to 31, then 37, then 44.</p>
+
+<p>I do not believe anyone set out to design a feature that makes a waiting customer feel unwanted forty-four separate times. But that is precisely what it did.</p>
+
+<h2>What the feature was trying to do</h2>
+
+<p>The intent behind the feature is easy to understand, and it is not a bad one. A blank "finding your ride" spinner is dead air, and dead air makes a wait feel longer than it actually is. Showing visible activity, such as a number that moves or a search that is clearly in progress, is a well-established way to make waiting feel productive rather than empty. The product team wanted to keep me engaged and to reassure me that the app was working hard on my behalf.</p>
+
+<p>The problem lies in what they chose to count. They surfaced the single number in the entire transaction that carries no good news for the user. Every increment represents a rejection, and every rejection reads as a quiet message that says the user is not wanted. A feature meant to reduce the discomfort of waiting ended up itemizing it instead.</p>
+
+<h2>Why it lands badly, and lands worst when it matters most</h2>
+
+<p>Context decides everything here. At two o'clock on a quiet Tuesday, a slowly rising rejection count is mildly annoying and little more. At 6:40pm during a demand surge, which is the exact moment the user is most desperate and least patient, that same counter becomes a live scoreboard of the user's own bad luck. The feature grows more intense in perfect step with the user's stress. It is loudest at the precise moment the user can least afford to hear it.</p>
+
+<p>There is a second and quieter harm. The number does not only make me feel bad. It tells me something I can no longer ignore, which is that supply is broken right now. Thirty drivers looked at this ride and declined it. A simple spinner would have hidden that uncertainty and allowed me to keep hoping. The counter replaces hope with evidence, and the evidence tells me to leave. The app handed me the one piece of information most likely to make me close it.</p>
+
+<p>The count is also monotonic, because it only ever rises. There is no version of this number that reassures the user. A progress bar fills toward something positive, but this counter fills toward nothing. It simply accumulates rejections until a match eventually appears in spite of them. The emotional arc of the feature has no satisfying endpoint, only a steadily worsening one.</p>
+
+<h2>Why this is a strategy problem, not only a design problem</h2>
+
+<p>Ride-hailing is a category with almost no switching cost. Uber, Ola, the local cab aggregator, and several auto apps all sit one swipe away on the same home screen, and they all offer essentially the same thing. The entire contest is about holding the user inside your app through the one fragile window in which they are deciding whether to wait or to switch.</p>
+
+<p>This feature does the opposite of what that contest requires. It actively strengthens the decision to leave. It takes a user who was waiting passively and gives them a growing, quantified reason to open a competitor. In a category defined by retention through the inconvenience of switching, Rapido built a feature whose core loop manufactures the impulse to switch. That is not a rough edge on an otherwise sound idea. It is the mechanism pointed in the wrong direction.</p>
+
+<p>I switched that evening. Over the next several times I needed a ride, I no longer opened Rapido first. A single feature, visible only during the most vulnerable thirty seconds of the experience, quietly changed which app I reach for by default. That is the real cost.</p>
+
+<h2>What I would have done instead</h2>
+
+<p>The underlying job is legitimate, because making the wait feel shorter and keeping the user confident are both worth doing. The fix is not to remove the activity indicator. The fix is to count something that is both true and on the user's side. The app could show that it is expanding the search radius. It could show that it is notifying captains nearby and that the pool of available drivers is growing rather than shrinking. It could show an honest estimate of the time to a match where one can be calculated. Each of these options still provides motion on the screen and still reassures the user that work is happening, and none of them frames the user as the thing being rejected.</p>
+
+<p>If supply genuinely is this poor, the honest move is to say so clearly and to offer an exit that keeps the user inside the ecosystem. The app could warn that this is a high-demand window, offer a single tap to switch from a cab to an auto or a bike, or provide an option to be notified when a captain becomes free. The goal should be to give the user agency, rather than a running tally of their rejections.</p>
+
+<p>The lesson I keep returning to is that transparency is not automatically a virtue. Showing the user more of what is happening only helps when what is happening reflects well on them, or at least reflects neutrally. Rapido was transparent about the one number it should have kept to itself. The most engaging element on the screen is not always the one worth showing.</p>
+
+<p class="closing">What is a feature you have seen that was clearly well-intentioned, yet optimized for the wrong number and cost the product its user in the process?</p>
+
+</div>
+</body>
+</html>

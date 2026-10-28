@@ -40,6 +40,14 @@ const articles = [
     link: "/documents/splitwise/05-stakeholder-simulation.html",
   },
   {
+    title: "The Feature That Made Me Quit Rapido",
+    type: "Opinion",
+    description:
+      "A well-intentioned engagement feature, a live '28/60 drivers rejected your ride' counter shown while you wait, and why it backfires hardest at peak hour. How counting the wrong number strengthened the decision to switch apps in a category with almost no switching cost, and what I would have shown instead.",
+    status: "Published",
+    link: "/documents/rapido-rejection-counter.html",
+  },
+  {
     title: "Netflix Breaks Its Own Episode-Ordering Rule — On Purpose",
     type: "Opinion",
     description:
