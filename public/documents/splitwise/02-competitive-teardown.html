@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Competitive Brief — Expense Splitting &amp; Settle-Up</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; line-height:1.6; color:#333; background:#fafafa; padding:20px; }
+.container { max-width:820px; margin:0 auto; background:#fff; padding:48px; box-shadow:0 2px 8px rgba(0,0,0,0.1); border-radius:8px; }
+h1 { font-size:2.2rem; margin-bottom:1rem; color:#1a1a1a; line-height:1.2; }
+h2 { font-size:1.5rem; margin-top:2.2rem; margin-bottom:0.8rem; color:#2c3e50; border-bottom:2px solid #3498db; padding-bottom:0.4rem; }
+h3 { font-size:1.15rem; margin-top:1.5rem; margin-bottom:0.6rem; color:#34495e; }
+h4 { font-size:1rem; margin-top:1.2rem; margin-bottom:0.4rem; color:#34495e; }
+p { margin:0.7rem 0; }
+ul, ol { margin:0.7rem 0 0.7rem 1.4rem; }
+li { margin:0.3rem 0; }
+blockquote { border-left:4px solid #3498db; background:#f1f6fb; padding:0.8rem 1rem; margin:1rem 0; color:#444; border-radius:0 4px 4px 0; }
+code { background:#f4f4f4; padding:0.1rem 0.4rem; border-radius:3px; font-size:0.9em; color:#c7254e; }
+table { border-collapse:collapse; width:100%; margin:1rem 0; font-size:0.92rem; }
+th, td { border:1px solid #e0e0e0; padding:0.5rem 0.7rem; text-align:left; vertical-align:top; }
+th { background:#f7f9fb; font-weight:600; }
+tr:nth-child(even) td { background:#fafbfc; }
+hr { border:none; border-top:1px solid #e8e8e8; margin:2rem 0; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Competitive Brief — Expense Splitting &amp; Settle-Up</h1>
+<p><strong>Focus:</strong> How competitors handle shared-expense tracking and the <em>settle-up / get-paid-back</em> loop specifically — the opportunity surfaced in the discovery study (Project 1).</p>
+<p><strong>Decision this informs:</strong> Where to differentiate vs. achieve parity for the Smart Nudge feature (Project 3).</p>
+<p><strong>Date:</strong> October 2026 — <em>competitive data has a shelf life; flagged areas change fast.</em></p>
+<blockquote><strong>Method.</strong> Ratings are based on signing up and walking the first-run experience of each product, public pricing pages, and App Store / Play Store / G2 review patterns — not marketing claims. Where I'm inferring rather than confirming, I say so.</blockquote>
+<hr>
+<h2>1. The Competitive Set</h2>
+<p>Defined at multiple levels (not just direct rivals — the real competitor is often <em>doing nothing</em>):</p>
+<table><thead><tr>
+<th>Level</th>
+<th>Products</th>
+<th>Why they're in the set</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Direct</strong></td>
+<td>Splitwise, Settle Up, Tricount</td>
+<td>Solve the same problem the same way: track and split shared costs.</td>
+</tr>
+<tr>
+<td><strong>Indirect</strong></td>
+<td>Google Pay / Venmo / UPI apps</td>
+<td>Solve <em>repayment</em> but not tracking — they own the moment our users leak into.</td>
+</tr>
+<tr>
+<td><strong>Substitute</strong></td>
+<td>A shared spreadsheet; WhatsApp + mental math</td>
+<td>What most people actually fall back to. <strong>The #1 real competitor.</strong></td>
+</tr>
+<tr>
+<td><strong>Adjacent</strong></td>
+<td>Revolut / bank-app "split bill" features</td>
+<td>Could bundle splitting into the payment app and eat the category.</td>
+</tr>
+</tbody></table>
+<p>The strategic read: the dangerous competitor isn't Settle Up. It's a bank/payment app adding "split this" as a feature, because they already own the repayment step our users leak into (Finding 3).</p>
+<hr>
+<h2>2. Feature Comparison Matrix</h2>
+<p>Rating scale: <strong>Strong</strong> (market-leading) · <strong>Adequate</strong> (works, not differentiated) · <strong>Weak</strong> (exists, gaps) · <strong>Absent</strong>.</p>
+<p>Rated on what matters to the <em>Reluctant Creditor</em> persona, not total feature count.</p>
+<table><thead><tr>
+<th>Capability</th>
+<th>Splitwise</th>
+<th>Settle Up</th>
+<th>Tricount</th>
+<th>Payment apps (GPay/Venmo)</th>
+<th>Spreadsheet</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Expense tracking</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&amp;nbsp;&amp;nbsp;Multi-person splits</td>
+<td>Strong</td>
+<td>Strong</td>
+<td>Strong</td>
+<td>Weak</td>
+<td>Adequate</td>
+</tr>
+<tr>
+<td>&amp;nbsp;&amp;nbsp;Unequal / itemized splits</td>
+<td>Strong</td>
+<td>Adequate</td>
+<td>Adequate</td>
+<td>Absent</td>
+<td>Weak</td>
+</tr>
+<tr>
+<td>&amp;nbsp;&amp;nbsp;Group / trip support</td>
+<td>Strong</td>
+<td>Adequate</td>
+<td>Strong</td>
+<td>Absent</td>
+<td>Adequate</td>
+</tr>
+<tr>
+<td><strong>Settle-up loop</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&amp;nbsp;&amp;nbsp;Balance clarity</td>
+<td>Strong</td>
+<td>Strong</td>
+<td>Adequate</td>
+<td>Weak</td>
+<td>Weak</td>
+</tr>
+<tr>
+<td>&amp;nbsp;&amp;nbsp;Repayment reminders</td>
+<td><strong>Weak</strong></td>
+<td><strong>Weak</strong></td>
+<td>Absent</td>
+<td>Absent</td>
+<td>Absent</td>
+</tr>
+<tr>
+<td>&amp;nbsp;&amp;nbsp;Tactful / tone-aware nudging</td>
+<td><strong>Absent</strong></td>
+<td><strong>Absent</strong></td>
+<td><strong>Absent</strong></td>
+<td><strong>Absent</strong></td>
+<td><strong>Absent</strong></td>
+</tr>
+<tr>
+<td>&amp;nbsp;&amp;nbsp;In-app / one-tap payment</td>
+<td>Adequate*</td>
+<td>Absent</td>
+<td>Absent</td>
+<td><strong>Strong</strong></td>
+<td>Absent</td>
+</tr>
+<tr>
+<td><strong>Trust</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&amp;nbsp;&amp;nbsp;Calculation correctness</td>
+<td>Strong</td>
+<td>Strong</td>
+<td>Strong</td>
+<td>N/A</td>
+<td>Weak (human error)</td>
+</tr>
+<tr>
+<td><strong>Monetization friction</strong></td>
+<td>Paywalls core-ish flows</td>
+<td>Mostly free</td>
+<td>Free + ads</td>
+<td>Free</td>
+<td>Free</td>
+</tr>
+</tbody></table>
+<p>\* Splitwise's pay integration is region-dependent and often a handoff, not a true in-app pay.</p>
+<p><strong>The whitespace is one row:</strong> <em>tactful, tone-aware nudging.</em> <strong>Nobody owns it.</strong> Every competitor either reminds bluntly or not at all. This is the exact gap Project 1 Finding 2 predicted.</p>
+<hr>
+<h2>3. Positioning Analysis</h2>
+<p>Using the standard template — <em>For [customer] who [need], [product] is a [category] that [benefit]. Unlike [alt], it [differentiator].</em></p>
+<ul>
+<li><strong>Splitwise:</strong> For groups sharing costs who need to track balances, Splitwise is the default expense-splitter that remembers who owes whom. Differentiator: ubiquity + network effect. <strong>Weakness: leans on being the incumbent; the settle-up loop is neglected.</strong></li>
+<li><strong>Settle Up:</strong> For privacy-minded groups, a free, no-account-needed splitter. Differentiator: free + frictionless start. Weakness: thin on repayment.</li>
+<li><strong>Tricount:</strong> For trip groups, a travel-first splitter. Differentiator: trip framing. Weakness: dormant outside trips.</li>
+<li><strong>Payment apps:</strong> For anyone sending money, instant P2P transfer. Differentiator: they <em>are</em> the money movement. Weakness: no memory of <em>why</em> or <em>who still owes</em>.</li>
+</ul>
+<p><strong>Unclaimed position:</strong> "the app that gets you paid back without making it weird." No one is making this claim. It's ours to take.</p>
+<hr>
+<h2>4. Strengths &amp; Weaknesses (honest — a brief that always shows us winning isn't credible)</h2>
+<p><strong>Splitwise strengths:</strong> category-defining brand, network effects (your friends already have it), genuinely strong splitting engine, trusted math.</p>
+<p><strong>Splitwise weaknesses:</strong> the <em>entire settle-up loop is an afterthought</em> — reminders are blunt, payment is a handoff, and aggressive paywalling of once-free features is the #1 complaint in recent reviews. The product optimized tracking and forgot the painful half (getting paid).</p>
+<p>Where competitors are genuinely ahead: payment apps win decisively on <em>actual money movement</em> (parity there is table stakes, not a differentiator we can win on).</p>
+<hr>
+<h2>5. Opportunities &amp; Threats</h2>
+<p><strong>Opportunities</strong></p>
+<ul>
+<li><strong>Own the tactful-nudge position</strong> — the one empty row in the matrix, validated by Finding 2. Differentiate here; achieve mere parity everywhere else.</li>
+<li><strong>Close the track→pay gap</strong> (Finding 3) by pulling repayment in-app, attacking the payment apps' only real advantage.</li>
+</ul>
+<p><strong>Threats</strong></p>
+<ul>
+<li>A payment app (GPay/Venmo/Revolut) adds "split + remind." They already own repayment; adding memory is easier for them than adding payment is for us. <strong>This is the nightmare scenario and the clock we're racing.</strong></li>
+<li>Continued paywall backlash eroding Splitwise's incumbent trust advantage.</li>
+</ul>
+<hr>
+<h2>6. Strategic Implications</h2>
+<ol>
+<li><strong>Differentiate on one thing: tactful, automated settle-up nudging.</strong> It's the only unclaimed row in the matrix and the sharpest pain from discovery. → This is the PRD feature (Project 3).</li>
+<li><strong>Achieve parity, not leadership, on splitting mechanics.</strong> They're solved; out-featuring them is a money pit.</li>
+<li><strong>Treat in-app payment as a strategic must</strong> (not to beat payment apps at payments, but to deny them the gap they'd use to beat us). → Shapes roadmap sequencing (Project 4).</li>
+<li><strong>Move before a payment app does.</strong> The window is the threat above.</li>
+</ol>
+<p><em>Shelf-life flag: payment-app "split bill" features and Splitwise's paywalling are the fastest-moving items here — re-check in a quarter.</em></p>
+</div>
+</body>
+</html>

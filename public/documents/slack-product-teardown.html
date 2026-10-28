@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slack — How a Gaming Company Accidentally Built the Future of Work</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; line-height:1.6; color:#333; background:#fafafa; padding:20px;
+  --color-border-tertiary:#e5e5e5; --color-border-secondary:#3498db;
+  --color-text-primary:#1a1a1a; --color-text-secondary:#555; --color-text-tertiary:#999;
+  --color-background-primary:#fff; --color-background-secondary:#fafbfc;
+  --border-radius-lg:10px; --border-radius-md:6px; }
+.container { max-width:820px; margin:0 auto; background:#fff; padding:48px; box-shadow:0 2px 8px rgba(0,0,0,0.1); border-radius:8px; }
+h1 { font-size:2.2rem; margin-bottom:0.6rem; color:#1a1a1a; line-height:1.2; }
+.lede { color:#666; margin-bottom:1.6rem; }
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.pill{font-size:12px;padding:3px 10px;border-radius:20px;border:1px solid var(--color-border-tertiary);color:var(--color-text-secondary)}
+.section{margin-bottom:6px;border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.sec-header{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--color-background-primary)}
+.sec-num{font-size:11px;font-weight:500;min-width:20px;color:var(--color-text-tertiary)}
+.sec-title{font-size:15px;font-weight:600;color:var(--color-text-primary);flex:1}
+.sec-tag{font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);font-weight:500}
+.sec-body{padding:12px 16px 14px 48px;border-top:1px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+.point{font-size:13px;color:var(--color-text-secondary);line-height:1.6;padding:3px 0;display:flex;gap:8px}
+.point::before{content:"—";color:var(--color-text-tertiary);flex-shrink:0}
+.quote-block{margin:10px 0 4px;padding:10px 14px;border-left:2px solid var(--color-border-secondary);background:var(--color-background-primary)}
+.quote-block p{font-size:13px;font-style:italic;color:var(--color-text-secondary);margin:0;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Slack — How a Gaming Company Accidentally Built the Future of Work</h1>
+<p class="lede">A product teardown: the pivot, the positioning, the PLG engine, and the PM lessons underneath a $27B accident.</p>
+
+<div class="meta">
+  <span class="pill">10–12 min read</span>
+  <span class="pill">Product teardown</span>
+  <span class="pill">Aspiring PMs, founders</span>
+  <span class="pill">PLG · B2B · Growth</span>
+</div>
+
+<div class="section">
+  <div class="sec-header">
+    <span class="sec-num">00</span>
+    <span class="sec-title">The hook — a $27B accident</span>
+    <span class="sec-tag" style="background:#EEEDFE;color:#3C3489">Opening</span>
+  </div>
+  <div class="sec-body">
+    <div class="point">Open with the scene: 2012, a small team building a multiplayer game called Glitch that nobody is playing</div>
+    <div class="point">The game was quietly failing — but the internal chat tool they built to coordinate? That was working remarkably well</div>
+    <div class="point">Pose the central question: what happens when your side project is better than your main product?</div>
+    <div class="quote-block"><p>"We were a company that failed at making a game and accidentally made a tool that changed how the world works. That's not a pivot — that's a near-death experience with a happy ending." — Stewart Butterfield (paraphrased)</p></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-header">
+    <span class="sec-num">01</span>
+    <span class="sec-title">The backstory — Glitch, Flickr, and a team that knew how to pivot</span>
+    <span class="sec-tag" style="background:#E1F5EE;color:#085041">Origin</span>
+  </div>
+  <div class="sec-body">
+    <div class="point">Brief history of Tiny Speck and Glitch — an ambitious browser-based MMO that shut down in 2012</div>
+    <div class="point">Stewart Butterfield's track record: he'd already pivoted from a game (Game Neverending) into Flickr — the same pattern, twice</div>
+    <div class="point">PM insight: serial pivots aren't luck — they're a skill. Butterfield was an expert at recognising latent value in what his team had already built</div>
+    <div class="point">The internal IRC-like tool the Glitch team used daily became the nucleus of what would become Slack</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-header">
+    <span class="sec-num">02</span>
+    <span class="sec-title">The product insight — why email was the real enemy</span>
+    <span class="sec-tag" style="background:#FAEEDA;color:#633806">Problem space</span>
+  </div>
+  <div class="sec-body">
+    <div class="point">The pain Slack was solving wasn't "bad chat tools" — it was the slow, asynchronous, cc-heavy chaos of workplace email</div>
+    <div class="point">Butterfield famously positioned Slack not as a chat app but as "email replacement" — a deliberate, provocative framing</div>
+    <div class="point">Key product decision: make messages searchable, persistent, and contextual — the three things email does poorly at scale</div>
+    <div class="point">PM lens: how you frame the problem you're solving determines who you compete with — and who you can beat</div>
+    <div class="quote-block"><p>Angle to explore: Was "killing email" always realistic, or was it a marketing position? What did Slack actually replace vs. what it sat alongside?</p></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-header">
+    <span class="sec-num">03</span>
+    <span class="sec-title">The growth engine — bottom-up PLG before PLG had a name</span>
+    <span class="sec-tag" style="background:#E6F1FB;color:#0C447C">Growth</span>
+  </div>
+  <div class="sec-body">
+    <div class="point">Slack didn't sell to IT departments — it spread through individual teams who loved it and then pulled the rest of the company in</div>
+    <div class="point">The freemium model was core: free forever for small teams, with a natural upgrade trigger (message history limit) that hit exactly when a team was most invested</div>
+    <div class="point">Word-of-mouth flywheel: because Slack is inherently collaborative, every new user is also an advocate inside their workplace</div>
+    <div class="point">$0 spent on traditional sales in the early years — a stat worth unpacking in detail</div>
+    <div class="point">PM lesson: product-led growth only works when the product delivers value before it asks for anything. Slack's free tier was genuinely, deliberately generous</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-header">
+    <span class="sec-num">04</span>
+    <span class="sec-title">The product decisions that made Slack sticky</span>
+    <span class="sec-tag" style="background:#FAECE7;color:#712B13">Product teardown</span>
+  </div>
+  <div class="sec-body">
+    <div class="point">Channels as a mental model: simple, intuitive, but deeply powerful for organising conversation by topic rather than by person</div>
+    <div class="point">Emoji reactions — a micro-feature with outsized impact on reducing notification fatigue and making async feel warmer</div>
+    <div class="point">Integrations and the App Directory: turning Slack into a platform, not just a tool — a classic move to deepen switching costs</div>
+    <div class="point">Search that actually works — underrated as a retention driver; teams stay because their institutional knowledge lives in Slack</div>
+    <div class="point">The onboarding experience: how Slack gets a team to its "aha moment" (first real conversation) faster than any competitor</div>
+    <div class="quote-block"><p>Framework to apply: map each feature to its role in acquisition, activation, retention, or expansion — and discuss the trade-offs Slack made in each.</p></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-header">
+    <span class="sec-num">05</span>
+    <span class="sec-title">The Microsoft Teams problem — competing against free and bundled</span>
+    <span class="sec-tag" style="background:#EEEDFE;color:#3C3489">Competition</span>
+  </div>
+  <div class="sec-body">
+    <div class="point">In 2017, Microsoft launched Teams and bundled it with Office 365 — suddenly Slack's freemium advantage was up against "free and already installed"</div>
+    <div class="point">Slack's response: double down on product quality, developer ecosystem, and the argument that Teams is a checkbox, not a product people love</div>
+    <div class="point">The enterprise vs. bottoms-up tension: Teams wins through IT procurement; Slack wins through employee preference — explore which force is stronger at scale</div>
+    <div class="point">What Slack did right: become the default for tech-forward companies and startups, which are the source of the next generation of enterprise buyers</div>
+    <div class="point">What Slack got wrong: underestimating how far "good enough + free" goes in cost-conscious procurement cycles</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-header">
+    <span class="sec-num">06</span>
+    <span class="sec-title">The Salesforce acquisition — what it means for the product</span>
+    <span class="sec-tag" style="background:#EAF3DE;color:#27500A">Strategy</span>
+  </div>
+  <div class="sec-body">
+    <div class="point">In 2021, Salesforce acquired Slack for $27.7B — one of the largest enterprise software deals ever</div>
+    <div class="point">The strategic logic: Salesforce needed a collaboration layer; Slack needed enterprise distribution and a credible path to compete with Teams</div>
+    <div class="point">Product question worth exploring: has the acquisition helped or hurt Slack's product identity? Is it still a beloved tool or becoming a Salesforce feature?</div>
+    <div class="point">The integration of Slack into the Salesforce ecosystem (Slack Canvas, Sales Cloud integrations) — vision vs. execution</div>
+    <div class="point">PM takeaway: acquisitions change incentives. The product that got acquired for its culture often gets reshaped by the culture of its acquirer</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-header">
+    <span class="sec-num">07</span>
+    <span class="sec-title">The PM lessons — what every aspiring product manager should take away</span>
+    <span class="sec-tag" style="background:#F1EFE8;color:#444441">Takeaways</span>
+  </div>
+  <div class="sec-body">
+    <div class="point">Lesson 1: The best products often come from solving your own team's problem — internal tools are underrated sources of product insight</div>
+    <div class="point">Lesson 2: Framing matters as much as features — "email replacement" was a positioning choice, not a product truth</div>
+    <div class="point">Lesson 3: PLG is a strategy, not a pricing model — it only works when the free product is genuinely valuable, not crippled</div>
+    <div class="point">Lesson 4: Switching costs compound — integrations, search history, and team habits make Slack sticky in ways that features alone never could</div>
+    <div class="point">Lesson 5: Distribution beats product quality in enterprise — the Teams story is a reminder that PMs don't just compete on features</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-header">
+    <span class="sec-num">08</span>
+    <span class="sec-title">The closing — what Glitch left behind</span>
+    <span class="sec-tag" style="background:#FBEAF0;color:#72243E">Closing</span>
+  </div>
+  <div class="sec-body">
+    <div class="point">Circle back to Glitch — the game that failed so that millions of teams could collaborate better</div>
+    <div class="point">The irony: Glitch was about creating a shared, playful world. So, in a way, was Slack</div>
+    <div class="point">End with an open question for the reader: what problem are you building a solution for right now — and what's the accidental product hiding inside it?</div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

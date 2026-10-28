@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stakeholder Simulation — Smart Nudge, Four Ways</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; line-height:1.6; color:#333; background:#fafafa; padding:20px; }
+.container { max-width:820px; margin:0 auto; background:#fff; padding:48px; box-shadow:0 2px 8px rgba(0,0,0,0.1); border-radius:8px; }
+h1 { font-size:2.2rem; margin-bottom:1rem; color:#1a1a1a; line-height:1.2; }
+h2 { font-size:1.5rem; margin-top:2.2rem; margin-bottom:0.8rem; color:#2c3e50; border-bottom:2px solid #3498db; padding-bottom:0.4rem; }
+h3 { font-size:1.15rem; margin-top:1.5rem; margin-bottom:0.6rem; color:#34495e; }
+h4 { font-size:1rem; margin-top:1.2rem; margin-bottom:0.4rem; color:#34495e; }
+p { margin:0.7rem 0; }
+ul, ol { margin:0.7rem 0 0.7rem 1.4rem; }
+li { margin:0.3rem 0; }
+blockquote { border-left:4px solid #3498db; background:#f1f6fb; padding:0.8rem 1rem; margin:1rem 0; color:#444; border-radius:0 4px 4px 0; }
+code { background:#f4f4f4; padding:0.1rem 0.4rem; border-radius:3px; font-size:0.9em; color:#c7254e; }
+table { border-collapse:collapse; width:100%; margin:1rem 0; font-size:0.92rem; }
+th, td { border:1px solid #e0e0e0; padding:0.5rem 0.7rem; text-align:left; vertical-align:top; }
+th { background:#f7f9fb; font-weight:600; }
+tr:nth-child(even) td { background:#fafbfc; }
+hr { border:none; border-top:1px solid #e8e8e8; margin:2rem 0; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Stakeholder Simulation — Smart Nudge, Four Ways</h1>
+<p><strong>The skill:</strong> the same feature (Smart Nudge, from the PRD) reframed for four audiences. Same feature, nothing changed about <em>what it is</em> — only what's foregrounded. A good PM reframes one idea for four rooms without it becoming four different features.</p>
+<hr>
+<h2>1. Engineering</h2>
+<blockquote>Foregrounds: feasibility, constraints, decisions needed. (This is the lens most non-technical PMs fake — written here from a real dev's view.)</blockquote>
+<p><strong>What we're building:</strong> a scheduled job that, after a quiet period, sends a tone-templated nudge on the creditor's behalf, with a deep link into a payment app pre-filled with the amount. Plus guardrails (frequency cap, mute, snooze).</p>
+<p><strong>Shipped / in progress</strong></p>
+<ul>
+<li>Analytics instrumentation (#12) lands <em>first</em> — we have no settle-rate baseline and can't evaluate the feature without it. Blocking all other work.</li>
+</ul>
+<p><strong>Decisions needed (with recommendation)</strong></p>
+<ul>
+<li><strong>Scheduler design:</strong> per-balance cron vs. a daily batch sweep. <em>Recommend batch sweep</em> — settle-up isn't latency-sensitive, and a daily sweep is far cheaper than per-balance timers at 2M balances. <code>ponytail: batch sweep, move to per-balance scheduling only if quiet-periods need sub-day precision.</code></li>
+<li><strong>Deep-link reliability (open PRD question):</strong> UPI/Venmo deep links with pre-filled amount are inconsistent across regions and app versions. Recommend: ship the handoff where links are reliable, fall back to copy-amount-to-clipboard elsewhere. Do <strong>not</strong> block launch on universal coverage (#16 handles that in Next).</li>
+<li><strong>Tone presets:</strong> static templated copy, not generative. Three string templates, per-contact selection stored on the balance relationship. No model in the P0 path — cheaper, testable, no abuse surface.</li>
+</ul>
+<p><strong>Constraints / risks</strong></p>
+<ul>
+<li>Idempotency on the nudge job is non-negotiable: a retry must never double-send. The frequency cap (#4) is the correctness guarantee, not just a UX nicety.</li>
+<li>Consent/mute state must be checked at send time, not enqueue time, or a just-muted contact still gets pinged.</li>
+</ul>
+<p><strong>Blockers:</strong> need the baseline-metrics query defined with Data before instrumentation is meaningful.</p>
+<hr>
+<h2>2. Design</h2>
+<blockquote>Foregrounds: user flow, UX tradeoffs, the emotional job.</blockquote>
+<p><strong>The real job:</strong> make the sender feel the ask is <em>costless</em> and make the receiver feel <em>prompted, not dunned.</em> The whole feature lives or dies on tone, not mechanics.</p>
+<p><strong>Key flows</strong></p>
+<ol>
+<li><em>Creditor setup:</em> pick a tone (Gentle / Neutral / Firm) per person or a default. Must be glanceable — this is a 3-second decision, not a settings deep-dive.</li>
+<li><em>Receiver nudge:</em> a message that reads human, not robotic, with a single obvious "Pay now" action and a quiet "I'll pay by…" escape hatch.</li>
+<li><em>Mute:</em> reachable in one tap from any balance — the safety valve for sensitive relationships.</li>
+</ol>
+<p><strong>Tradeoffs to resolve</strong></p>
+<ul>
+<li><strong>Tone copy is the design deliverable, not decoration.</strong> Gentle vs. Firm has to be <em>felt</em> in one read. If users can't tell the presets apart, the differentiator is gone and mute-rate spikes.</li>
+<li>Default tone: Gentle. Erring toward too-soft protects the relationship (the thing users said they'd rather keep than the money).</li>
+<li>Avoid dark patterns — no guilt-tripping copy. The nudge-to-mute metric is our guardrail against designing something that technically works but feels gross.</li>
+</ul>
+<p><strong>Open:</strong> prototype test needed — does an auto-sent nudge actually feel less awkward to receivers, or just relocate the awkwardness? (Carried from discovery.)</p>
+<hr>
+<h2>3. Marketing</h2>
+<blockquote>Foregrounds: positioning, the external story, no internal jargon.</blockquote>
+<p><strong>The one-liner:</strong> <em>"Get paid back. Without making it weird."</em></p>
+<p><strong>Why it lands:</strong> everyone has floated a friend ₹500 and quietly written it off rather than send the awkward text. We're naming a feeling no competitor talks about.</p>
+<p><strong>Positioning:</strong> we own the empty space in the category — every other app either reminds bluntly or not at all. We're the first that reminds <em>tactfully</em>, on your behalf.</p>
+<p><strong>Story beats</strong></p>
+<ul>
+<li>The villain isn't your friend — it's the awkward text you never send.</li>
+<li>Splitwise already remembers who owes you. Now it does the uncomfortable part for you — gently.</li>
+<li>Choose your tone. The app speaks in your voice, not a robot's.</li>
+</ul>
+<p><strong>Launch framing:</strong> benefit-led ("close out your group trip without chasing anyone"), not feature-led ("automated reminder scheduling"). Lead with the relief, not the mechanism.</p>
+<p><strong>Watch-out:</strong> don't over-promise money movement in v1 — the pay step is a handoff, not our rail. Market the <em>nudge</em>, not a wallet.</p>
+<hr>
+<h2>4. Executive</h2>
+<blockquote>Foregrounds: cost, metrics, ROI, the strategic bet. Under 200 words.</blockquote>
+<p><strong>Status: Green (proposed)</strong></p>
+<p><strong>TL;DR:</strong> We're fixing the neglected half of our core loop — getting users <em>paid back</em> — and claiming a position no competitor owns: the tactful reminder.</p>
+<p><strong>Why it matters strategically:</strong></p>
+<ul>
+<li>Our product optimized tracking and ignored collection, the actually-painful part (validated in discovery).</li>
+<li>The real threat is a payment app bolting "split + remind" onto their wallet. They own repayment; adding memory is easy for them. This feature is how we hold the ground before they take it.</li>
+</ul>
+<p><strong>The bet:</strong> differentiate on <em>tone</em> (cheap, unclaimed), achieve parity everywhere else, and pull repayment in-app to deny the payment apps their opening.</p>
+<p><strong>Cost:</strong> ~21 person-weeks to a measured v1 (one squad, roughly one quarter).</p>
+<p><strong>Success (evaluated at 1 quarter):</strong> +15pp balances settled in 14 days; &gt;25% nudge-to-pay; nudge-to-mute &lt;10% (our "is it annoying" tripwire).</p>
+<p><strong>Decision needed:</strong> approve the squad allocation for Q[X]. Separately — the paywall-softening question is a related but distinct business call I've kept <em>off</em> this roadmap; flag if you want it bundled.</p>
+<p><strong>Risk (Owned):</strong> payment-app competitive move — mitigated by shipping the in-app pay handoff in the Next phase.</p>
+</div>
+</body>
+</html>

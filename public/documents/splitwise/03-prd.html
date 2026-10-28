@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRD — Smart Nudge: Tactful Settle-Up Reminders</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; line-height:1.6; color:#333; background:#fafafa; padding:20px; }
+.container { max-width:820px; margin:0 auto; background:#fff; padding:48px; box-shadow:0 2px 8px rgba(0,0,0,0.1); border-radius:8px; }
+h1 { font-size:2.2rem; margin-bottom:1rem; color:#1a1a1a; line-height:1.2; }
+h2 { font-size:1.5rem; margin-top:2.2rem; margin-bottom:0.8rem; color:#2c3e50; border-bottom:2px solid #3498db; padding-bottom:0.4rem; }
+h3 { font-size:1.15rem; margin-top:1.5rem; margin-bottom:0.6rem; color:#34495e; }
+h4 { font-size:1rem; margin-top:1.2rem; margin-bottom:0.4rem; color:#34495e; }
+p { margin:0.7rem 0; }
+ul, ol { margin:0.7rem 0 0.7rem 1.4rem; }
+li { margin:0.3rem 0; }
+blockquote { border-left:4px solid #3498db; background:#f1f6fb; padding:0.8rem 1rem; margin:1rem 0; color:#444; border-radius:0 4px 4px 0; }
+code { background:#f4f4f4; padding:0.1rem 0.4rem; border-radius:3px; font-size:0.9em; color:#c7254e; }
+table { border-collapse:collapse; width:100%; margin:1rem 0; font-size:0.92rem; }
+th, td { border:1px solid #e0e0e0; padding:0.5rem 0.7rem; text-align:left; vertical-align:top; }
+th { background:#f7f9fb; font-weight:600; }
+tr:nth-child(even) td { background:#fafbfc; }
+hr { border:none; border-top:1px solid #e8e8e8; margin:2rem 0; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>PRD — Smart Nudge: Tactful Settle-Up Reminders</h1>
+<p><strong>Product:</strong> Splitwise</p>
+<p><strong>Author:</strong> [Your name] · <strong>Date:</strong> October 2026 · <strong>Version:</strong> 1.0</p>
+<p><strong>Status:</strong> Draft for review</p>
+<p><strong>Grounding:</strong> Discovery study (Project 1, Findings 1 &amp; 2) + competitive gap analysis (Project 2, §2 — the one unclaimed matrix row)</p>
+<hr>
+<h2>Problem Statement</h2>
+<p>Splitwise users track balances well but routinely fail to <em>collect</em> them. The blocker isn't memory — it's the social cost of asking: people will absorb a ₹300–₹500 debt rather than send a reminder that feels like nagging (Discovery Finding 1). Existing reminders are generic and read as passive-aggressive by both sides, so users disable or ignore them (Finding 2). Every uncollected balance is a leak in the core loop and a quiet erosion of the friendships the product sits inside. No competitor addresses tone (Competitive §2).</p>
+<h2>Goals</h2>
+<p>Outcomes, not outputs:</p>
+<ol>
+<li><strong>Increase the share of balances that get settled</strong> — more debts closed, fewer written off to avoid awkwardness.</li>
+<li><strong>Reduce time-to-settle</strong> for balances older than 7 days.</li>
+<li><strong>Make reminding feel costless to the sender</strong> — the creditor never has to personally "be the one who asks."</li>
+<li><strong>Make receiving a nudge feel like a prompt, not a dunning</strong> — measured by nudge-to-dismiss vs. nudge-to-pay ratio.</li>
+<li><strong>Deny the track→pay gap</strong> — a meaningful share of nudges lead to payment in the same session (attacks Competitive §5 threat).</li>
+</ol>
+<h2>Non-Goals</h2>
+<table><thead><tr>
+<th>Out of scope for v1</th>
+<th>Why</th>
+</tr></thead><tbody>
+<tr>
+<td>Building our own payment rail</td>
+<td>Massive, regulated, separate initiative. v1 hands off to existing UPI/Venmo.</td>
+</tr>
+<tr>
+<td>Debt collection for non-users</td>
+<td>Network/legal complexity; core loop is user-to-user first.</td>
+</tr>
+<tr>
+<td>AI that drafts fully custom free-text messages</td>
+<td>Tone <em>calibration</em> (3 presets) delivers 90% of value without the hallucination/abuse risk. P2.</td>
+</tr>
+<tr>
+<td>Rescuing micro-debts via batching (Finding 5)</td>
+<td>Lowest-confidence finding; validate before building. Parked for roadmap "Later."</td>
+</tr>
+<tr>
+<td>Changing the splitting/calculation engine</td>
+<td>It works and is trusted (Finding 6). Don't touch the license-to-operate.</td>
+</tr>
+</tbody></table>
+<h2>User Stories</h2>
+<p>Ordered by priority, grounded in the personas from Project 1.</p>
+<ol>
+<li>As a <strong>Reluctant Creditor</strong>, I want the app to send a tactful reminder on my behalf, so I can get paid back without personally being the bad guy.</li>
+<li>As a <strong>Reluctant Creditor</strong>, I want to choose how gentle or firm the tone is, so the nudge matches my relationship with that person.</li>
+<li>As a <strong>debtor receiving a nudge</strong>, I want to pay in one tap from the reminder, so I settle before I get distracted (the track→pay gap).</li>
+<li>As an <strong>Involuntary Treasurer</strong>, I want nudges to go out automatically to everyone who owes me after a trip, so I'm not individually chasing five people.</li>
+<li>As any user, I want to <em>mute</em> nudges for a specific person, so a sensitive relationship never gets auto-messaged. <em>(Edge case — consent/safety.)</em></li>
+<li>As a debtor, I want to say "I'll pay by Friday," so the nudge pauses instead of repeating. <em>(Edge case — avoids the nagging loop we're trying to kill.)</em></li>
+</ol>
+<h2>Requirements</h2>
+<h3>Must-Have (P0) — the feature doesn't solve the problem without these</h3>
+<ul>
+<li><strong>Automated nudge trigger</strong>: system sends a settle-up reminder on the creditor's behalf after a configurable quiet period (default 7 days).</li>
+</ul>
+<p>  - <em>Acceptance:</em> Given a balance &gt;7 days old and nudges enabled, when the quiet period lapses, then the debtor receives one nudge and the creditor is notified it was sent.</p>
+<ul>
+<li><strong>Three tone presets</strong>: Gentle / Neutral / Firm. Creditor picks per-person or sets a default.</li>
+</ul>
+<p>  - <em>Acceptance:</em> Each preset produces visibly different copy; selection persists per contact.</p>
+<ul>
+<li><strong>One-tap pay handoff</strong>: nudge contains a deep link to the debtor's preferred payment app pre-filled with amount.</li>
+</ul>
+<p>  - <em>Acceptance:</em> Tapping opens UPI/Venmo with amount populated; on return, app prompts "mark as settled?"</p>
+<ul>
+<li><strong>Frequency cap + mute</strong>: max one nudge per balance per quiet period; creditor can mute any contact.</li>
+</ul>
+<p>  - <em>Acceptance:</em> No contact receives &gt;1 nudge/period; muted contacts receive zero. <em>(This is the anti-nagging guardrail — without it we rebuild the problem we're solving.)</em></p>
+<ul>
+<li><strong>"I'll pay by [date]" snooze</strong>: debtor can defer; nudge pauses until then.</li>
+</ul>
+<h3>Nice-to-Have (P1) — fast follows</h3>
+<ul>
+<li>Smart quiet-period suggestion based on that pair's historical settle speed.</li>
+<li>Nudge-effectiveness readout to the creditor ("3 of 4 nudges settled").</li>
+<li>Partial-payment handling in the nudge flow.</li>
+</ul>
+<h3>Future Considerations (P2) — design so we don't block these</h3>
+<ul>
+<li>AI-drafted custom-tone copy (design the tone system as pluggable).</li>
+<li>Micro-debt batching (pending Finding 5 validation).</li>
+<li>Nudges to non-users via SMS/WhatsApp.</li>
+</ul>
+<h2>Success Metrics</h2>
+<p><strong>Leading (days–weeks):</strong></p>
+<ul>
+<li>Nudge opt-in rate among users with open balances — target <strong>&gt;40%</strong> in 30 days.</li>
+<li>Nudge-to-pay rate (nudge → payment in same session) — target <strong>&gt;25%</strong>.</li>
+<li>Nudge-to-mute rate (proxy for "feels like nagging") — keep <strong>&lt;10%</strong>. <em>If mute spikes, the tone system failed.</em></li>
+</ul>
+<p><strong>Lagging (weeks–months):</strong></p>
+<ul>
+<li>% of balances settled within 14 days — target <strong>+15pp</strong> vs. baseline.</li>
+<li>Median time-to-settle for 7-day-old balances — target <strong>−30%</strong>.</li>
+<li>Retention of Reluctant Creditor cohort — directional lift.</li>
+</ul>
+<p><em>Measurement:</em> event instrumentation on nudge sent/opened/paid/muted/snoozed; cohort comparison vs. a holdout that keeps old reminders.</p>
+<h2>Open Questions</h2>
+<ul>
+<li><strong>[Data — blocking]</strong> What's today's baseline settle-rate and time-to-settle? Targets above are hypotheses until we have it.</li>
+<li><strong>[Design]</strong> Does an auto-sent nudge genuinely feel less awkward to the <em>receiver</em>, or does it just relocate the awkwardness? → prototype test, not more interviews (carried from Project 1 open questions).</li>
+<li><strong>[Legal]</strong> Consent model for auto-messaging on someone's behalf — opt-in default, or explicit per-contact?</li>
+<li><strong>[Eng]</strong> Deep-link reliability into UPI/Venmo with pre-filled amount across regions — how robust is it? (See Project 5 engineering lens.)</li>
+</ul>
+<h2>Phasing</h2>
+<ul>
+<li><strong>Phase 1:</strong> P0 nudge loop with tone presets + mute/snooze guardrails. Ship to a holdout-controlled cohort.</li>
+<li><strong>Phase 2:</strong> P1 one-tap pay refinement + effectiveness readout, after Phase 1 confirms tone doesn't trigger mute spikes.</li>
+</ul>
+</div>
+</body>
+</html>

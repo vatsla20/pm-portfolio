@@ -1,19 +1,59 @@
 const articles = [
   {
-    title: "[Product Teardown: An App You Use Daily]",
-    type: "Product Teardown",
+    title: "Splitwise — Customer Discovery Study",
+    type: "User Research",
     description:
-      "What it does well, where it falls short, and what I'd change — with measurable success criteria.",
-    status: "Draft",
-    link: null,
+      "A structured discovery study on how people manage shared money — research design, 6 interviews synthesized into prioritized findings, evidence-based personas, and opportunity areas. Honest about live vs. reconstructed data and confidence levels.",
+    status: "Published",
+    link: "/documents/splitwise/01-discovery-research.html",
   },
   {
-    title: "[How I'd Improve X — Feature Proposal]",
+    title: "Splitwise — Competitive Teardown",
+    type: "Product Teardown",
+    description:
+      "A full competitive brief across 5 competitors and substitutes, with a feature matrix, positioning analysis, and the one unclaimed position in the category. Lands on a sharp strategic recommendation, not a list of screenshots.",
+    status: "Published",
+    link: "/documents/splitwise/02-competitive-teardown.html",
+  },
+  {
+    title: "Smart Nudge — Product Requirements Document",
+    type: "PRD",
+    description:
+      "A full PRD for a tactful settle-up reminder feature, grounded in the discovery findings: problem statement, goals, non-goals, user stories, P0/P1/P2 requirements with acceptance criteria, and leading/lagging success metrics.",
+    status: "Published",
+    link: "/documents/splitwise/03-prd.html",
+  },
+  {
+    title: "Splitwise — Prioritized Roadmap (RICE)",
     type: "Strategy",
     description:
-      "A detailed feature proposal for [product you use], including user segments, prioritization, and success metrics.",
-    status: "Draft",
-    link: null,
+      "An 18-item backlog scored with RICE, then sequenced into Now/Next/Later with judgment layered on top — including three deliberate overrides of the raw ranking, each justified. Shows the reasoning, not just the arithmetic.",
+    status: "Published",
+    link: "/documents/splitwise/04-roadmap-rice.html",
+  },
+  {
+    title: "Smart Nudge — Stakeholder Simulation",
+    type: "Framework",
+    description:
+      "The same feature reframed for four audiences — engineering, design, marketing, and executive — foregrounding what each room cares about without changing what the feature is.",
+    status: "Published",
+    link: "/documents/splitwise/05-stakeholder-simulation.html",
+  },
+  {
+    title: "Netflix Breaks Its Own Episode-Ordering Rule — On Purpose",
+    type: "Opinion",
+    description:
+      "A small UI detail — episodes sorted newest-first for episodic shows, oldest-first for narrative series — and why it reveals a product sorting by user intent, not content format. The kind of decision users never notice but feel every session.",
+    status: "Published",
+    link: "/documents/netflix-episode-ordering.html",
+  },
+  {
+    title: "Slack — How a Gaming Company Accidentally Built the Future of Work",
+    type: "Product Teardown",
+    description:
+      "A teardown of Slack's journey from a failed game's internal chat tool to a $27B acquisition: the pivot, the 'email replacement' positioning, bottom-up PLG before it had a name, the Teams threat, and the PM lessons underneath.",
+    status: "Published",
+    link: "/documents/slack-product-teardown.html",
   },
   {
     title: "The Gap Between Building a Feature and Building a Product",
@@ -39,6 +79,7 @@ const typeColors: Record<string, string> = {
   Opinion: "bg-amber-500/10 text-amber-400 border-amber-500/20",
   PRD: "bg-green-500/10 text-green-400 border-green-500/20",
   Framework: "bg-rose-500/10 text-rose-400 border-rose-500/20",
+  "User Research": "bg-teal-500/10 text-teal-400 border-teal-500/20",
 };
 
 export default function Writing() {
@@ -49,7 +90,9 @@ export default function Writing() {
         <div className="w-16 h-1 bg-accent rounded mb-4" />
         <p className="text-muted mb-10">
           Demonstrating how I think about products — teardowns, strategy pieces,
-          and frameworks.
+          and frameworks. The Splitwise pieces form one connected case study:
+          discovery → competitive teardown → PRD → prioritized roadmap →
+          stakeholder alignment.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -94,16 +137,6 @@ export default function Writing() {
               </ArticleWrapper>
             );
           })}
-        </div>
-
-        {/* Tip for the user */}
-        <div className="mt-10 p-4 rounded-lg border border-dashed border-border">
-          <p className="text-xs text-muted/70 text-center">
-            <strong className="text-muted">Tip:</strong> Start with a Product
-            Teardown — it&apos;s the easiest to write without PM experience. Pick an
-            app you use daily, analyze what works, what doesn&apos;t, and what you&apos;d
-            change.
-          </p>
         </div>
       </div>
     </section>
