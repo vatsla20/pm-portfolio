@@ -20,6 +20,16 @@ const projects = [
       "The problem: candidate verification in hiring is slow, fraud-prone, and document-heavy — costing recruiters hours per hire. I led problem discovery, defined the solution scope, and built an AI-based verification system that reconciles candidate documents using phonetic name fusion and graph-based consistency analysis. The win wasn't the technical execution — it was identifying the right customer pain, framing the right solution, and making a compelling case for its business value. This is the foundation of my patent-pending identity verification architecture.",
   },
   {
+    title: "DentistAI — AI Evaluation Framework for a WhatsApp Booking Bot",
+    outcome:
+      "Designed the AI metrics framework and a version-controlled golden-set eval that caught a missing safety metric before it could ship",
+    role: "Led",
+    domain: "Healthcare / Conversational AI",
+    tags: ["AI product metrics", "LLM evaluation", "AI safety", "Hallucination & escalation", "Multilingual NLP", "Eval-driven development"],
+    description:
+      "The problem: a WhatsApp booking bot for Indian dental clinics (Hindi/English) is only as good as its worst failure — a hallucinated slot, a misread intent, or worse, a bot casually dispensing medical advice. I built the full AI metrics framework (North Star: AI-Assisted Booking Completion Rate, laddered into Quality / Safety / Efficiency layers) and then the artifact that makes it real: a labeled golden-set eval dataset stratified to the production language mix (40% Hindi, 30% code-switched) so the bot can't ace an English-skewed dashboard and fail in Pune. The set is safety-weighted — intent, slot-filling, hallucination grounding, graceful escalation, and clinical-advice refusal — with a runnable grader enforcing the language guardrail. Building the eval surfaced a gap in my own metrics: a dental bot needs a dedicated Clinical-advice Refusal metric (never diagnose, never dose, redirect emergencies), which I then wrote back into the framework and launch gates. The PM motion on display: metrics → eval → caught a gap → closed it.",
+  },
+  {
     title: "Tenant Decommissioning Automation — Operational Risk Elimination",
     outcome:
       "Reduced decommissioning turnaround time by 90% · Eliminated manual error risk · Enforced governance at every step",
@@ -28,6 +38,16 @@ const projects = [
     tags: ["Process improvement", "Risk identification", "Workflow automation", "Governance design", "Stakeholder alignment"],
     description:
       "The problem: tenant decommissioning at SAP Signavio was entirely manual — no audit trail, no standard process, slow execution, and a growing liability as the platform scaled. I identified this as an unacceptable operational risk, made the case for automation, and architected a governed workflow with built-in audit controls. The result transformed a multi-hour, error-prone process into a reliable, repeatable system. This is a textbook PM motion: spot a silent pain point, quantify the risk, define the solution, and ship it.",
+  },
+  {
+    title: "Daily PM Dashboard — AI News Synthesis Pipeline",
+    outcome:
+      "Built a zero-API-key news pipeline that fetches 30+ sources, dedupes with a local LLM, and renders a filterable daily briefing",
+    role: "Built",
+    domain: "Developer Tools / AI",
+    tags: ["AI tooling", "LLM prompting", "RSS/feed parsing", "React", "Self-initiated", "Developer productivity"],
+    description:
+      "The problem: staying current on AI and product news requires scanning dozens of sites daily — noisy, repetitive, and time-consuming. I built a fully local pipeline: a shell script fetches RSS/Atom feeds, Hacker News, Reddit, YouTube, and company blogs from a curated source list; pipes all items through a Claude-powered synthesis prompt that deduplicates overlapping stories and writes neutral multi-source briefs; and writes the result as a flat JSON file consumed by a React dashboard. The pipeline runs on zero API keys and zero backend — just curl, jq, and the local claude CLI. The dashboard shows animated brief cards filterable by topic (AI in products / product strategy / business moves) with source-link chips and inline video embeds. A refresh button re-runs the full pipeline live.",
   },
   {
     title: "LLM + RAG Conversational Analytics Tool for API Management",
