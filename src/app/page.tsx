@@ -5,10 +5,12 @@ import Projects from "@/components/Projects";
 import Resume from "@/components/Resume";
 import Writing from "@/components/Writing";
 import Contact from "@/components/Contact";
+import Loader from "@/components/Loader";
 
 export default function Home() {
   return (
-    <main className="flex-1">
+    <main id="main">
+      <Loader />
       <Hero />
       <About />
       <Skills />

@@ -1,3 +1,6 @@
+"use client";
+import { useEffect, useRef } from "react";
+
 const experience = [
   {
     title: "Full Stack Developer",
@@ -68,99 +71,70 @@ const certifications = [
 ];
 
 export default function Resume() {
+  const line = useRef<HTMLDivElement>(null);
+  const fill = useRef<HTMLSpanElement>(null);
+
+  // The bar fills as you scroll through it; each role lights when the fill reaches it.
+  useEffect(() => {
+    const el = line.current!, f = fill.current!;
+    const jobs = [...el.querySelectorAll<HTMLElement>(".job")];
+    let raf = 0;
+    const frame = () => {
+      raf = 0;
+      const r = el.getBoundingClientRect();
+      const reach = innerHeight * 0.6 - r.top; // the fill's tip follows a line 60% down the screen
+      const p = Math.min(Math.max(reach / r.height, 0), 1);
+      f.style.scale = `1 ${p}`;
+      jobs.forEach((j) => j.classList.toggle("lit", j.offsetTop + 12 <= reach));
+    };
+    const on = () => (raf ||= requestAnimationFrame(frame));
+    frame();
+    addEventListener("scroll", on, { passive: true });
+    addEventListener("resize", on);
+    addEventListener("depth", on);
+    return () => { removeEventListener("scroll", on); removeEventListener("resize", on); cancelAnimationFrame(raf); };
+  }, []);
+
   return (
-    <section id="resume" className="py-24 px-6 bg-surface/50">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-3xl font-bold">Resume</h2>
-          <a
-            href="/resume.pdf"
-            download="Vatsla_Khurana_Resume.pdf"
-            className="text-sm text-accent hover:text-accent-light transition-colors flex items-center gap-1"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              />
-            </svg>
-            Download PDF
-          </a>
-        </div>
-        <div className="w-16 h-1 bg-accent rounded mb-10" />
+    <section id="resume" className="sec" data-say="Watch the line. Every role lights up as you pass it.">
+      <div className="sec-head" data-reveal>
+        <h2 className="display h2">Resume</h2>
+        <a href="/resume.pdf" download="Vatsla_Khurana_Resume.pdf" className="btn primary">Download PDF ↓</a>
+      </div>
 
-        <div className="mb-12">
-          <h3 className="text-sm font-semibold text-accent-light uppercase tracking-wider mb-6">
-            Experience
-          </h3>
-          <div className="space-y-8">
-            {experience.map((job, index) => (
-              <div key={index} className="relative pl-6 border-l border-border">
-                <div className="absolute left-0 top-1 w-2.5 h-2.5 rounded-full bg-accent -translate-x-[5.5px]" />
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                  <h4 className="text-base font-semibold text-foreground">
-                    {job.title}
-                  </h4>
-                  <span className="text-xs text-muted">{job.period}</span>
-                </div>
-                <p className="text-sm text-accent-light mb-3">{job.company}</p>
-                <ul className="space-y-2">
-                  {job.bullets.map((bullet, i) => (
-                    <li
-                      key={i}
-                      className="text-sm text-muted leading-relaxed flex gap-2"
-                    >
-                      <span className="text-accent mt-1 shrink-0">›</span>
-                      {bullet}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Education & Certs in 2 columns */}
-        <div className="grid md:grid-cols-2 gap-8">
-          <div>
-            <h3 className="text-sm font-semibold text-accent-light uppercase tracking-wider mb-4">
-              Education
-            </h3>
-            {education.map((edu, index) => (
-              <div key={index} className="p-4 rounded-lg bg-surface border border-border">
-                <h4 className="text-sm font-semibold text-foreground">
-                  {edu.degree}
-                </h4>
-                <p className="text-sm text-muted">
-                  {edu.school} • {edu.year}
-                </p>
-                <p className="text-xs text-muted/70 mt-1">{edu.note}</p>
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold text-accent-light uppercase tracking-wider mb-4">
-              Certifications
-            </h3>
-            <div className="space-y-2">
-              {certifications.map((cert, index) => (
-                <div
-                  key={index}
-                  className="p-3 rounded-lg bg-surface border border-border text-sm text-muted"
-                >
-                  {cert}
-                </div>
+      <h3 className="sr">Experience</h3>
+      <div className="timeline" ref={line}>
+        <div className="track" aria-hidden="true"><span className="fill" ref={fill} /></div>
+        {experience.map((job) => (
+          <div key={job.company + job.period} className="job">
+            <h4>{job.title}</h4>
+            <span className="period">{job.period}</span>
+            <p className="company">{job.company}</p>
+            <ul>
+              {job.bullets.map((bullet, i) => (
+                <li key={i} className={i > 1 ? "dfull" : i > 0 ? "d60" : undefined}>{bullet}</li>
               ))}
-            </div>
+            </ul>
           </div>
+        ))}
+      </div>
+
+      <div className="edu">
+        <div data-reveal>
+          <h3>Education</h3>
+          {education.map((edu) => (
+            <div key={edu.degree} className="card">
+              <b>{edu.degree}</b>
+              <p className="muted small">{edu.school} • {edu.year}</p>
+              <p className="small" style={{ color: "var(--accent)", marginTop: 4 }}>{edu.note}</p>
+            </div>
+          ))}
+        </div>
+        <div data-reveal>
+          <h3>Certifications</h3>
+          {certifications.map((cert, i) => (
+            <div key={cert} className={`card${i > 3 ? " d60" : ""}`}>{cert}</div>
+          ))}
         </div>
       </div>
     </section>

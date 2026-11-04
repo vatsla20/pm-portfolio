@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useEffect, useState } from "react";
+import { ThinkingOrb } from "thinking-orbs";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -14,67 +14,35 @@ const navItems = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [read, setRead] = useState(0);
+
+  // how far down the page you are, as a live readout
+  useEffect(() => {
+    const on = () => setRead(Math.round((scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight)) * 100));
+    on();
+    addEventListener("scroll", on, { passive: true });
+    return () => removeEventListener("scroll", on);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link
-          href="/"
-          className="text-lg font-semibold tracking-tight gradient-text"
-        >
-          VK
-        </Link>
-
-        {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className="text-sm text-muted hover:text-foreground transition-colors duration-200"
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden flex flex-col gap-1.5 p-2"
-          aria-label="Toggle menu"
-        >
-          <span
-            className={`block w-5 h-0.5 bg-foreground transition-transform duration-200 ${isOpen ? "rotate-45 translate-y-2" : ""}`}
-          />
-          <span
-            className={`block w-5 h-0.5 bg-foreground transition-opacity duration-200 ${isOpen ? "opacity-0" : ""}`}
-          />
-          <span
-            className={`block w-5 h-0.5 bg-foreground transition-transform duration-200 ${isOpen ? "-rotate-45 -translate-y-2" : ""}`}
-          />
-        </button>
+    <nav className="nav" aria-label="Main">
+      <div className="nav-l">
+        <a href="#main" className="mark" aria-label="VK, back to top">VK</a>
+        <span className="meta muted" aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+          <ThinkingOrb state="breathing" size={20} theme="dark" /> {String(read).padStart(2, "0")}% read
+        </span>
       </div>
-
-      {/* Mobile menu */}
-      {isOpen && (
-        <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-md">
-          <ul className="flex flex-col px-6 py-4 gap-4">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-sm text-muted hover:text-foreground transition-colors duration-200"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <button className="burger" onClick={() => setIsOpen(!isOpen)} aria-expanded={isOpen} aria-controls="nav-list">
+        {isOpen ? "Close" : "Menu"}
+      </button>
+      <ul id="nav-list" className={isOpen ? "open" : ""}>
+        {navItems.map((item) => (
+          <li key={item.href}>
+            <a href={item.href} onClick={() => setIsOpen(false)}>{item.label}</a>
+          </li>
+        ))}
+        <li aria-hidden="true"><span className="dot" style={{ display: "block" }} /></li>
+      </ul>
     </nav>
   );
 }

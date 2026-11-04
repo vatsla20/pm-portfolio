@@ -1,3 +1,7 @@
+"use client";
+import { useRef, useState } from "react";
+import Rail from "./Rail";
+
 const articles = [
   {
     title: "Splitwise — Customer Discovery Study",
@@ -81,72 +85,48 @@ const articles = [
   },
 ];
 
-const typeColors: Record<string, string> = {
-  "Product Teardown": "bg-purple-500/10 text-purple-400 border-purple-500/20",
-  Strategy: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  Opinion: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-  PRD: "bg-green-500/10 text-green-400 border-green-500/20",
-  Framework: "bg-rose-500/10 text-rose-400 border-rose-500/20",
-  "User Research": "bg-teal-500/10 text-teal-400 border-teal-500/20",
-};
+type Article = (typeof articles)[number];
 
 export default function Writing() {
+  const [open, setOpen] = useState<Article | null>(null);
+  const dlg = useRef<HTMLDialogElement>(null);
+  const read = (a: Article) => { setOpen(a); requestAnimationFrame(() => dlg.current?.showModal()); };
+
   return (
-    <section id="writing" className="py-24 px-6">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-2">Writing & Product Thinking</h2>
-        <div className="w-16 h-1 bg-accent rounded mb-4" />
-        <p className="text-muted mb-10">
-          Demonstrating how I think about products — teardowns, strategy pieces,
-          and frameworks. The Splitwise pieces form one connected case study:
-          discovery → competitive teardown → PRD → prioritized roadmap →
-          stakeholder alignment.
+    <section id="writing" className="sec" style={{ paddingLeft: 0, paddingRight: 0 }} data-say="Pick one. It opens right here.">
+      <div className="sec-head" style={{ padding: "0 var(--m)" }} data-reveal>
+        <h2 className="display h2">Writing &amp; Product Thinking</h2>
+        <p>
+          Demonstrating how I think about products — teardowns, strategy pieces, and frameworks. The Splitwise pieces form one connected case study:
+          discovery → competitive teardown → PRD → prioritized roadmap → stakeholder alignment.
         </p>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {articles.map((article, index) => {
-            const ArticleWrapper = article.link ? 'a' : 'article';
-            const wrapperProps = article.link
-              ? { href: article.link, target: "_blank", rel: "noopener noreferrer" }
-              : {};
-
-            return (
-              <ArticleWrapper
-                key={index}
-                {...wrapperProps}
-                className="group p-5 rounded-xl bg-surface border border-border hover:border-accent/40 transition-all duration-300 cursor-pointer"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span
-                    className={`px-2 py-0.5 text-xs rounded border ${typeColors[article.type] || "bg-surface-light text-muted"}`}
-                  >
-                    {article.type}
-                  </span>
-                  <span className="text-xs text-muted/60 italic">
-                    {article.status}
-                  </span>
-                </div>
-                <h3 className="text-base font-semibold text-foreground group-hover:text-accent-light transition-colors mb-2">
-                  {article.title}
-                  {article.link && (
-                    <svg
-                      className="inline-block ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  )}
-                </h3>
-                <p className="text-sm text-muted leading-relaxed">
-                  {article.description}
-                </p>
-              </ArticleWrapper>
-            );
-          })}
-        </div>
       </div>
+      <Rail label="Writing">
+        {articles.map((article) => (
+          <button key={article.title} type="button" className="doc" role="listitem" onClick={() => read(article)}>
+            <span className="tag-row"><span className="badge">{article.type}</span><span className="badge ghost">{article.status}</span></span>
+            <span>
+              <span className="t" style={{ display: "block" }}>{article.title}</span>
+              <span className="muted d60" style={{ display: "block", marginTop: 12, fontSize: 15 }}>{article.description}</span>
+            </span>
+            <span className="open-hint">Read it here <span className="arrow" aria-hidden="true">→</span></span>
+          </button>
+        ))}
+      </Rail>
+      <dialog ref={dlg} className="reader" aria-label={open?.title} onClose={() => setOpen(null)} onClick={(e) => e.target === dlg.current && dlg.current?.close()}>
+        {open && (
+          <>
+            <div className="reader-top">
+              <p className="t">{open.title}</p>
+              <div style={{ display: "flex", gap: 6 }}>
+                <a className="btn" href={open.link} target="_blank" rel="noopener">New tab</a>
+                <form method="dialog"><button className="btn">Close</button></form>
+              </div>
+            </div>
+            <div className="reader-screen"><iframe src={open.link} title={open.title} /></div>
+          </>
+        )}
+      </dialog>
     </section>
   );
 }
