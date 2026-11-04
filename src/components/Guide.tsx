@@ -2,10 +2,11 @@
 import { useEffect, useRef, useState } from "react";
 import { ThinkingOrb } from "thinking-orbs";
 
-const SKIN = "#b97a57", SKIN_SHADE = "#a3684a", HAIR = "#2a1c15", TOP = "#c2571a", INK = "#1c1a17", IVORY = "#f4eee3";
+const SKIN = "#d29a74", SKIN_SHADE = "#b9805c", HAIR = "#1f1512", HAIR_LIGHT = "#3a2a22", BLAZER = "#1c1a17", LAPEL = "#35312c", TOP = "#efe6d6", GOLD = "#c9a04a", LIP = "#b5525a", IVORY = "#f4eee3";
 
-// An illustrated guide, cut out like a sticker: she sways, breathes, blinks, walks while you scroll,
-// waves when a new section arrives and points at whatever you hover.
+// Vatsla, illustrated and cut out like a sticker: long hair worn down and side-swept, gold hoops,
+// a flower pendant, a black blazer over an ivory top. She sways, breathes, blinks, walks while you
+// scroll, waves when a new section arrives and points at whatever you hover.
 export function Figure() {
   return (
     <svg viewBox="0 0 120 244" aria-hidden="true">
@@ -17,50 +18,67 @@ export function Figure() {
           <feMerge><feMergeNode in="edge" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
       </defs>
-      <ellipse cx="60" cy="238" rx="30" ry="4" fill={INK} opacity="0.18" />
+      <ellipse cx="60" cy="238" rx="30" ry="4" fill={BLAZER} opacity="0.18" />
       <g filter="url(#cutout)">
         <g className="g-sway">
-          {/* ponytail, behind the head */}
-          <path className="g-tail" d="M74 30c14 4 18 22 14 40-2 9-7 15-11 17 3-10 3-24-4-34-3-5-5-12 1-23z" fill={HAIR} />
+          {/* hair behind: long, worn down, longer on her left */}
+          <g className="g-hair">
+            <ellipse cx="60" cy="38" rx="22" ry="24" fill={HAIR} />
+            <path d="M39 36c-4 22-5 50-1 74l10-3c-3-22-2-46 2-64z" fill={HAIR} />
+            <path d="M81 34c6 24 9 60 5 94-7-1-12-5-14-10 4-28 3-58-4-77z" fill={HAIR} />
+          </g>
           {/* back arm */}
           <g className="g-arm b">
-            <path d="M80 72c6 2 9 6 10 12l3 26c1 6-3 8-6 3l-6-24z" fill={TOP} />
-            <path d="M89 108l4 18c1 4-1 7-4 6l-3-1-2-21z" fill={SKIN_SHADE} />
+            <path d="M80 74c6 2 9 6 10 12l3 26c1 6-3 8-6 3l-6-24z" fill={BLAZER} />
+            <path d="M89 110l3 16c1 4-1 7-4 6l-3-1-1-19z" fill={SKIN_SHADE} />
           </g>
           {/* legs */}
-          <g className="g-leg a"><path d="M50 138h11l-1 82h-9z" fill={INK} /><path d="M49 218h12c4 0 8 3 8 7H48z" fill={IVORY} stroke={INK} strokeWidth="1.2" /></g>
-          <g className="g-leg b"><path d="M60 138h11l-1 82h-9z" fill="#2b2824" /><path d="M60 218h11c4 0 8 3 8 7H59z" fill={IVORY} stroke={INK} strokeWidth="1.2" /></g>
-          {/* body */}
+          <g className="g-leg a"><path d="M50 140h11l-1 80h-9z" fill={BLAZER} /><path d="M49 218h12c4 0 7 3 7 7H48z" fill={BLAZER} /></g>
+          <g className="g-leg b"><path d="M60 140h11l-1 80h-9z" fill="#2b2824" /><path d="M60 218h11c4 0 7 3 7 7H59z" fill={BLAZER} /></g>
+          {/* body: blazer over an ivory top, a fine gold chain and a flower pendant */}
           <g className="g-breathe">
-            <path d="M52 62h16v10H52z" fill={SKIN_SHADE} />
-            <path d="M40 76c0-7 8-11 20-11s20 4 20 11l3 62c0 4-3 6-6 6H43c-3 0-6-2-6-6z" fill={TOP} />
-            <path d="M50 66c3 6 7 9 10 9s7-3 10-9" fill="none" stroke={IVORY} strokeWidth="2.2" strokeLinecap="round" />
-            <path d="M44 120h32" stroke="#a84a16" strokeWidth="1.4" opacity="0.6" />
+            <path d="M53 60h14v12H53z" fill={SKIN_SHADE} />
+            <path d="M38 80c0-9 9-13 22-13s22 4 22 13l3 62c0 4-3 6-6 6H41c-3 0-6-2-6-6z" fill={BLAZER} />
+            <path d="M50 69l10 32 10-32c-3-1-6-2-10-2s-7 1-10 2z" fill={TOP} />
+            <path d="M52.5 70q7.5 14 15 0" fill="none" stroke={GOLD} strokeWidth="0.7" />
+            <g transform="translate(60 84)" fill="none" stroke={GOLD} strokeWidth="0.9">
+              <circle r="1.1" /><circle cx="0" cy="-2" r="1.1" /><circle cx="1.9" cy="-0.6" r="1.1" /><circle cx="1.2" cy="1.6" r="1.1" /><circle cx="-1.2" cy="1.6" r="1.1" /><circle cx="-1.9" cy="-0.6" r="1.1" />
+            </g>
+            <path d="M49 69l7 30M71 69l-7 30" stroke={LAPEL} strokeWidth="2.4" strokeLinecap="round" />
+            <path d="M47 120h4M69 120h4" stroke={LAPEL} strokeWidth="1.6" strokeLinecap="round" />
           </g>
           {/* head */}
           <g className="g-head">
-            <ellipse cx="42.5" cy="40" rx="3" ry="4.4" fill={SKIN_SHADE} />
-            <ellipse cx="77.5" cy="40" rx="3" ry="4.4" fill={SKIN_SHADE} />
-            <circle cx="42" cy="46" r="1.6" fill={TOP} />
-            <circle cx="78" cy="46" r="1.6" fill={TOP} />
-            <ellipse cx="60" cy="40" rx="17" ry="20.5" fill={SKIN} />
-            <path d="M42 36c-1-14 8-22 19-22 12 0 20 8 18 22-4-6-9-10-16-11-4 5-12 9-21 11z" fill={HAIR} />
+            <ellipse cx="43.5" cy="41" rx="2.6" ry="4" fill={SKIN_SHADE} />
+            <ellipse cx="76.5" cy="41" rx="2.6" ry="4" fill={SKIN_SHADE} />
+            <circle cx="43" cy="47.5" r="2.3" fill="none" stroke={GOLD} strokeWidth="1.1" />
+            <circle cx="77" cy="47.5" r="2.3" fill="none" stroke={GOLD} strokeWidth="1.1" />
+            <ellipse cx="60" cy="40" rx="16.5" ry="20" fill={SKIN} />
+            {/* side part, hair swept across the forehead */}
+            <path d="M43 36c-1-14 7-22 18-22 11 0 19 8 18 22-3-7-8-11-14-12-6 4-14 8-22 12z" fill={HAIR} />
+            <path d="M62 15c6 1 11 5 13 11" fill="none" stroke={HAIR_LIGHT} strokeWidth="1.1" strokeLinecap="round" />
+            <path d="M49.5 33.5q4-2.6 8 -0.4M62.5 33.1q4-2.2 8 0.4" fill="none" stroke={HAIR} strokeWidth="2.1" strokeLinecap="round" />
             <g className="g-eyes">
-              <ellipse cx="53.5" cy="41" rx="1.9" ry="2.4" fill={INK} />
-              <ellipse cx="66.5" cy="41" rx="1.9" ry="2.4" fill={INK} />
+              <ellipse cx="53.5" cy="39.5" rx="2.3" ry="1.9" fill={BLAZER} />
+              <ellipse cx="66.5" cy="39.5" rx="2.3" ry="1.9" fill={BLAZER} />
+              <circle cx="54.2" cy="38.9" r="0.55" fill={IVORY} />
+              <circle cx="67.2" cy="38.9" r="0.55" fill={IVORY} />
             </g>
-            <path d="M50 35.5q3.5-2 7 0M63 35.5q3.5-2 7 0" fill="none" stroke={HAIR} strokeWidth="1.5" strokeLinecap="round" />
-            <path d="M60 43v4.5l-1.8 1" fill="none" stroke={SKIN_SHADE} strokeWidth="1.3" strokeLinecap="round" />
-            <path d="M54.5 52q5.5 4.5 11 0" fill="none" stroke="#7c3b22" strokeWidth="1.7" strokeLinecap="round" />
-            <ellipse cx="49" cy="48" rx="3" ry="1.7" fill={TOP} opacity="0.22" />
-            <ellipse cx="71" cy="48" rx="3" ry="1.7" fill={TOP} opacity="0.22" />
+            <path d="M60 41v5.5l-2 1" fill="none" stroke={SKIN_SHADE} strokeWidth="1.3" strokeLinecap="round" />
+            {/* the wide smile, teeth showing */}
+            <path d="M52 50.5q8 9 16 0q-8 2.4-16 0z" fill={LIP} />
+            <path d="M54 51.2q6 3.4 12 0q-6 1.2-12 0z" fill={IVORY} />
+            <ellipse cx="48.5" cy="47" rx="3.2" ry="1.8" fill={LIP} opacity="0.18" />
+            <ellipse cx="71.5" cy="47" rx="3.2" ry="1.8" fill={LIP} opacity="0.18" />
           </g>
+          {/* hair that falls in front of her left shoulder */}
+          <path className="g-hair" d="M75 42c7 18 9 48 6 78-4-2-7-6-8-11 2-22 1-46-4-62z" fill={HAIR} />
           {/* front arm with a tablet */}
           <g className="g-arm a">
-            <path d="M40 72c-6 2-9 6-10 12l-3 26c-1 6 3 8 6 3l6-24z" fill={TOP} />
-            <path d="M31 108l-3 18c-1 4 1 7 4 6l3-1 2-21z" fill={SKIN} />
-            <rect className="g-tab" x="22" y="118" width="22" height="29" rx="3" fill={INK} transform="rotate(-8 33 132)" />
-            <rect className="g-tab" x="25" y="121" width="16" height="22" rx="1.5" fill={TOP} opacity="0.55" transform="rotate(-8 33 132)" />
+            <path d="M40 74c-6 2-9 6-10 12l-3 26c-1 6 3 8 6 3l6-24z" fill={BLAZER} />
+            <path d="M31 110l-2 16c-1 4 1 7 4 6l3-1 1-19z" fill={SKIN} />
+            <rect x="22" y="118" width="22" height="29" rx="3" fill={BLAZER} transform="rotate(-8 33 132)" />
+            <rect x="25" y="121" width="16" height="22" rx="1.5" fill="#c2571a" opacity="0.6" transform="rotate(-8 33 132)" />
           </g>
         </g>
       </g>

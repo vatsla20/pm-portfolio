@@ -13,8 +13,9 @@
   --black-soft: #5c564d;
   --ink-dim: rgba(28, 26, 23, 0.72);
 
-  --wrap: 1240px;
-  --m: clamp(20px, 4vw, 48px);
+  --wrap: 1720px;
+  --accent: #c2571a;
+  --m: clamp(20px, 3.4vw, 56px);
   --gap: clamp(14px, 1.6vw, 24px);
   --sec: clamp(56px, 7vw, 104px);
 
@@ -42,7 +43,7 @@ a { color: inherit; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .skip { position: fixed; left: 24px; top: -60px; z-index: 100; background: var(--orange); color: var(--ivory); padding: 10px 16px; font-weight: 700; border-radius: 999px; }
 .skip:focus { top: 16px; }
-.wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--m); }
+.wrap { max-width: calc(var(--wrap) + 2 * var(--m)); margin-inline: auto; padding-inline: var(--m); }
 
 /* ---------- Depth: the visitor's time budget ---------- */
 html[data-depth="30"] .d60, html[data-depth="30"] .dfull, html[data-depth="60"] .dfull { display: none !important; }
@@ -99,9 +100,10 @@ html.js .morph.grow.go [data-l] { opacity: 1; scale: 1; translate: 0 0; }
 
 /* ---------- Sections and rhythm ---------- */
 .sec { padding-block: var(--sec) 0; }
-.sec-head { display: flex; flex-direction: column; gap: 12px; margin-bottom: clamp(20px, 2.6vw, 36px); max-width: 64ch; }
+.sec-head { display: flex; flex-direction: column; gap: 12px; margin-bottom: clamp(20px, 2.6vw, 36px); }
+.sec-head p { max-width: 62ch; }
 .sec-head p { font-size: var(--t-lead); line-height: 1.4; color: var(--ink-dim); }
-.band { background: var(--black); color: var(--ivory); border-radius: clamp(20px, 3vw, 36px); margin: var(--sec) clamp(8px, 1.4vw, 20px) 0; padding-block: calc(var(--sec) * 0.8); }
+.band { background: var(--black); color: var(--ivory); border-radius: clamp(20px, 3vw, 36px); margin: var(--sec) clamp(8px, 1vw, 14px) 0; padding-block: calc(var(--sec) * 0.8); }
 .band + .band { margin-top: 16px; }
 .band .sec-head p { color: rgba(244, 238, 227, 0.75); }
 .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); }
@@ -168,9 +170,9 @@ html.js [data-stagger].in > * { opacity: 1; translate: 0 0; scale: 1; }
 /* ---------- Horizontal rails (Projects, Writing): they glide, cards grow at the centre ---------- */
 .rail { position: relative; }
 .rail-stage { position: sticky; top: 96px; display: flex; flex-direction: column; overflow: hidden; padding-top: clamp(18px, 2vw, 28px); }
-.rail-track { display: flex; gap: clamp(16px, 2vw, 28px); padding-inline: max(var(--m), calc((100vw - var(--wrap)) / 2 + var(--m))); width: max-content; align-items: center; will-change: transform; }
+.rail-track { display: flex; gap: clamp(16px, 2vw, 28px); padding-inline: max(var(--m), calc((100vw - var(--wrap)) / 2 - 8px)); width: max-content; align-items: center; will-change: transform; }
 .rail-track > * { will-change: transform, opacity; }
-.rail-foot { display: flex; align-items: center; gap: 18px; max-width: var(--wrap); width: 100%; margin: 18px auto 0; padding-inline: var(--m); font-weight: 700; font-size: var(--t-small); font-variant-numeric: tabular-nums; }
+.rail-foot { display: flex; align-items: center; gap: 18px; max-width: calc(var(--wrap) + 2 * var(--m)); width: 100%; margin: 18px auto 0; padding-inline: var(--m); font-weight: 700; font-size: var(--t-small); font-variant-numeric: tabular-nums; }
 .rail-bar { flex: 1; height: 3px; border-radius: 3px; background: rgba(244, 238, 227, 0.16); overflow: hidden; }
 .rail-bar span { display: block; height: 100%; background: var(--orange); transform-origin: left; scale: 0 1; }
 @media (max-width: 860px), (prefers-reduced-motion: reduce) {
@@ -182,7 +184,7 @@ html.js [data-stagger].in > * { opacity: 1; translate: 0 0; scale: 1; }
 }
 
 /* project block: title, outcome, description and skills together */
-.project { width: min(600px, 84vw); flex: none; display: flex; flex-direction: column; gap: 14px; padding: clamp(24px, 2.6vw, 36px); border-radius: 24px; background: var(--black-2); color: var(--ivory); transition: background-color 0.4s var(--ease); }
+.project { width: clamp(300px, 34vw, 620px); flex: none; display: flex; flex-direction: column; gap: 14px; padding: clamp(24px, 2.6vw, 36px); border-radius: 24px; background: var(--black-2); color: var(--ivory); transition: background-color 0.4s var(--ease); }
 .project:hover { background: #33302b; }
 .project-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .project h3 { font-size: var(--t-title); line-height: 1.08; }
@@ -193,7 +195,7 @@ html.js [data-stagger].in > * { opacity: 1; translate: 0 0; scale: 1; }
 .badge.hot { background: var(--orange); color: var(--ivory); }
 
 /* writing cards */
-.doc { width: min(380px, 78vw); min-height: 0; flex: none; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; padding: 28px; border-radius: 24px; border: 0; text-align: left; font: inherit; color: var(--ivory); background: var(--black-2); cursor: pointer; transition: background-color 0.4s var(--ease), color 0.4s var(--ease); }
+.doc { width: clamp(280px, 24vw, 420px); min-height: 0; flex: none; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; padding: 28px; border-radius: 24px; border: 0; text-align: left; font: inherit; color: var(--ivory); background: var(--black-2); cursor: pointer; transition: background-color 0.4s var(--ease), color 0.4s var(--ease); }
 .doc:hover { background: var(--ivory); color: var(--black); }
 .doc:hover .badge.ghost { color: var(--black); box-shadow: inset 0 0 0 1.5px rgba(28, 26, 23, 0.3); }
 .doc:hover .doc-d { color: var(--ink-dim); }
@@ -290,7 +292,7 @@ html.seen .loader, html:not(.js) .loader { display: none; }
 .guide .g-breathe { transform-box: fill-box; transform-origin: 50% 100%; animation: breathe 3.2s ease-in-out infinite; }
 .guide .g-head { transform-box: fill-box; transform-origin: 50% 90%; animation: nod 5s ease-in-out infinite; }
 .guide .g-eyes { transform-box: fill-box; transform-origin: 50% 50%; animation: blink 4.6s infinite; }
-.guide .g-tail { transform-box: fill-box; transform-origin: 10% 0; animation: tail 2.6s ease-in-out infinite alternate; }
+.guide .g-hair { transform-box: fill-box; transform-origin: 50% 0; animation: hair 3.4s ease-in-out infinite alternate; }
 .guide .g-arm, .guide .g-leg { transform-box: fill-box; transform-origin: 50% 4%; transition: rotate 0.4s var(--ease); }
 .guide.walk .g-leg.a, .guide.walk .g-arm.b { animation: swing 0.46s ease-in-out infinite alternate; }
 .guide.walk .g-leg.b { animation: swing 0.46s ease-in-out infinite alternate-reverse; }
@@ -300,7 +302,7 @@ html.seen .loader, html:not(.js) .loader { display: none; }
 @keyframes breathe { 50% { scale: 1 1.018; } }
 @keyframes nod { 0%, 80%, 100% { rotate: 0deg; } 88% { rotate: -4deg; } }
 @keyframes blink { 0%, 93%, 100% { scale: 1 1; } 96% { scale: 1 0.1; } }
-@keyframes tail { to { rotate: 8deg; } }
+@keyframes hair { from { rotate: -1.6deg; } to { rotate: 2.2deg; } }
 @keyframes swing { from { rotate: -14deg; } to { rotate: 14deg; } }
 @keyframes wave { from { rotate: -150deg; } to { rotate: -120deg; } }
 @media (max-width: 720px) { .guide-say { display: none; } .guide svg { width: 56px; height: 114px; } }
