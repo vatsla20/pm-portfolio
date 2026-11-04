@@ -18,6 +18,7 @@ export default function Home() {
       <Resume />
       <Writing />
       <Contact />
+      <div style={{ height: 24 }} />
     </main>
   );
 }

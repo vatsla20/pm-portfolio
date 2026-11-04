@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import Morph from "./Morph";
 
 const experience = [
   {
@@ -70,25 +71,34 @@ const certifications = [
   "Google Agentic AI Hackathon",
 ];
 
+// "July 2025 – Present" → year big, months small, so the dates are the first thing the eye lands on
+const split = (period: string) => {
+  const [from, to] = period.split("–").map((x) => x.trim());
+  const year = (x: string) => x.match(/\d{4}/)?.[0] ?? x;
+  return { big: `${year(from)}${to ? ` – ${to === "Present" ? "now" : year(to)}` : ""}`, small: period };
+};
+
 export default function Resume() {
   const line = useRef<HTMLDivElement>(null);
   const fill = useRef<HTMLSpanElement>(null);
 
-  // The bar fills as you scroll through it; each role lights when the fill reaches it.
+  // The line fills as you scroll; each role lights when the fill reaches its dot.
   useEffect(() => {
     const el = line.current!, f = fill.current!;
     const jobs = [...el.querySelectorAll<HTMLElement>(".job")];
-    let raf = 0;
+    let raf = 0, shown = 0;
     const frame = () => {
-      raf = 0;
       const r = el.getBoundingClientRect();
-      const reach = innerHeight * 0.6 - r.top; // the fill's tip follows a line 60% down the screen
-      const p = Math.min(Math.max(reach / r.height, 0), 1);
-      f.style.scale = `1 ${p}`;
-      jobs.forEach((j) => j.classList.toggle("lit", j.offsetTop + 12 <= reach));
+      const reach = innerHeight * 0.62 - r.top;
+      const goal = Math.min(Math.max(reach / r.height, 0), 1);
+      shown += (goal - shown) * 0.14;
+      if (Math.abs(goal - shown) < 0.001) shown = goal;
+      f.style.scale = `1 ${shown}`;
+      jobs.forEach((j) => j.classList.toggle("lit", j.offsetTop + 10 <= shown * r.height));
+      raf = shown === goal ? 0 : requestAnimationFrame(frame);
     };
     const on = () => (raf ||= requestAnimationFrame(frame));
-    frame();
+    on();
     addEventListener("scroll", on, { passive: true });
     addEventListener("resize", on);
     addEventListener("depth", on);
@@ -96,44 +106,50 @@ export default function Resume() {
   }, []);
 
   return (
-    <section id="resume" className="sec" data-say="Watch the line. Every role lights up as you pass it.">
-      <div className="sec-head" data-reveal>
-        <h2 className="display h2">Resume</h2>
-        <a href="/resume.pdf" download="Vatsla_Khurana_Resume.pdf" className="btn primary">Download PDF ↓</a>
+    <section id="resume" className="wrap sec" data-say="Watch the line. Every role lights up as you pass it.">
+      <div className="sec-head" style={{ maxWidth: "none", flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap" }}>
+        <Morph as="h2" text="Resume" className="h2" />
+        <a href="/resume.pdf" download="Vatsla_Khurana_Resume.pdf" className="btn primary"><span>Download PDF ↓</span></a>
       </div>
 
       <h3 className="sr">Experience</h3>
       <div className="timeline" ref={line}>
         <div className="track" aria-hidden="true"><span className="fill" ref={fill} /></div>
-        {experience.map((job) => (
-          <div key={job.company + job.period} className="job">
-            <h4>{job.title}</h4>
-            <span className="period">{job.period}</span>
-            <p className="company">{job.company}</p>
-            <ul>
-              {job.bullets.map((bullet, i) => (
-                <li key={i} className={i > 1 ? "dfull" : i > 0 ? "d60" : undefined}>{bullet}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        {experience.map((job) => {
+          const d = split(job.period);
+          return (
+            <div key={job.company + job.period} className="job">
+              <p className="when"><b>{d.big}</b><span>{d.small}</span></p>
+              <span className="dot" aria-hidden="true" />
+              <div className="body">
+                <h4>{job.title}</h4>
+                <p className="company">{job.company}</p>
+                <ul>
+                  {job.bullets.map((bullet, i) => (
+                    <li key={i} className={i > 1 ? "dfull" : i > 0 ? "d60" : undefined}>{bullet}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <div className="edu">
-        <div data-reveal>
+        <div data-stagger>
           <h3>Education</h3>
-          {education.map((edu) => (
-            <div key={edu.degree} className="card">
+          {education.map((edu, i) => (
+            <div key={edu.degree} className="item" style={{ "--n": i + 1 } as React.CSSProperties}>
               <b>{edu.degree}</b>
-              <p className="muted small">{edu.school} • {edu.year}</p>
-              <p className="small" style={{ color: "var(--accent)", marginTop: 4 }}>{edu.note}</p>
+              <p className="small dim">{edu.school} • {edu.year}</p>
+              <p className="note">{edu.note}</p>
             </div>
           ))}
         </div>
-        <div data-reveal>
+        <div data-stagger>
           <h3>Certifications</h3>
           {certifications.map((cert, i) => (
-            <div key={cert} className={`card${i > 3 ? " d60" : ""}`}>{cert}</div>
+            <div key={cert} className={`item${i > 3 ? " d60" : ""}`} style={{ "--n": i + 1 } as React.CSSProperties}>{cert}</div>
           ))}
         </div>
       </div>

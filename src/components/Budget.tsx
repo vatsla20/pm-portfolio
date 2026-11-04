@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
+import { ThinkingOrb } from "thinking-orbs";
 
 const depths = ["30", "60", "full"] as const;
 const names = { "30": "The gist", "60": "The highlights", full: "Everything" };
 const WPM = 238; // average adult silent reading speed
 const READ = "h1, h2, h3, h4, p, li";
-const SKIP = "button, .budget, .guide, nav, .loader";
+const SKIP = "button, .budget-card, .guide, nav, .loader, .curtain";
 
 // Count what a person would read at the current depth; hidden text doesn't count.
 function seconds() {
@@ -48,18 +49,23 @@ export default function Budget() {
   }
 
   return (
-    <div className="budget" role="group" aria-labelledby="budget-q">
-      <p id="budget-q" className="lead" style={{ fontWeight: 700 }}>How long do you have?</p>
-      <div className="budget-b" style={{ marginTop: 14 }}>
-        {depths.map((d) => (
-          <button key={d} type="button" className="btn" aria-pressed={depth === d} onClick={() => pick(d)}>
-            {times[d] ?? names[d]}
-          </button>
-        ))}
+    <div className="budget-card" role="group" aria-labelledby="budget-q">
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16 }}>
+        <p id="budget-q" className="lead" style={{ fontWeight: 700, maxWidth: "14ch" }}>How long do you have?</p>
+        <ThinkingOrb state="working" size={64} theme="dark" />
       </div>
-      <p className="small muted" style={{ marginTop: 12 }}>
-        {names[depth as keyof typeof names]}. Times are measured on this page at {WPM} words a minute.
-      </p>
+      <div>
+        <div className="budget-b">
+          {depths.map((d) => (
+            <button key={d} type="button" className="btn" aria-pressed={depth === d} onClick={() => pick(d)}>
+              <span>{times[d] ?? names[d]}</span>
+            </button>
+          ))}
+        </div>
+        <p className="budget-note" style={{ marginTop: 14 }}>
+          {names[depth as keyof typeof names]}. The page reshapes to fit; times are measured on it at {WPM} words a minute.
+        </p>
+      </div>
     </div>
   );
 }

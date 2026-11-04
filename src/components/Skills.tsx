@@ -1,4 +1,5 @@
 import { ThinkingOrb } from "./Orb";
+import Morph from "./Morph";
 
 const skills = {
   "Product Skills": ["Product lifecycle management", "Roadmap planning", "Requirements & PRD writing", "Prioritisation (RICE, MoSCoW)", "Metrics & KPI definition", "User research & discovery", "0-to-1 product development"],
@@ -11,14 +12,14 @@ const orbs = { "Product Skills": "shaping", Methodologies: "weaving", "Technical
 
 export default function Skills() {
   return (
-    <section id="skills" className="sec" data-say="Four kinds of tools. Each orb thinks a different way.">
-      <div className="sec-head" data-reveal>
-        <h2 className="display h2">Skills &amp; Tools</h2>
+    <section id="skills" className="wrap sec" data-say="Four kinds of tools. Each orb thinks a different way.">
+      <div className="sec-head">
+        <Morph as="h2" text="Skills & Tools" className="h2" />
       </div>
-      <div className="skills" data-reveal>
-        {Object.entries(skills).map(([category, items]) => (
-          <div key={category} className="panel">
-            <h3><ThinkingOrb state={orbs[category as keyof typeof orbs]} size={20} theme="dark" /> {category}</h3>
+      <div className="skills" data-stagger>
+        {Object.entries(skills).map(([category, items], n) => (
+          <div key={category} className="card" style={{ "--n": n } as React.CSSProperties}>
+            <h3><span className="orb-pill"><ThinkingOrb state={orbs[category as keyof typeof orbs]} size={20} theme="dark" /></span>{category}</h3>
             <div className="chips">
               {items.map((skill, i) => (
                 <span key={skill} className={`chip${i > 3 ? " d60" : ""}`}>{skill}</span>

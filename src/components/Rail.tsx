@@ -1,44 +1,71 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// Scroll down, the row moves sideways. The section is exactly as tall as the row is wide, so nothing is skipped.
-export default function Rail({ children, label }: { children: React.ReactNode; label: string }) {
+// Scroll down, the row glides sideways. Movement eases toward the scroll position instead of
+// jumping with it, and each card grows and brightens as it reaches the centre.
+export default function Rail({ children, label, count }: { children: React.ReactNode; label: string; count: number }) {
   const rail = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const bar = useRef<HTMLSpanElement>(null);
+  const [at, setAt] = useState(1);
 
   useEffect(() => {
     const r = rail.current!, t = track.current!, b = bar.current!;
+    const cards = [...t.children] as HTMLElement[];
     const mq = matchMedia("(min-width: 861px) and (prefers-reduced-motion: no-preference)");
-    let raf = 0, travel = 0;
+    let raf = 0, travel = 0, x = 0, live = false;
+
     const size = () => {
       if (!mq.matches) { r.style.height = ""; return; }
-      travel = Math.max(0, t.scrollWidth - innerWidth + 24);
-      r.style.height = `${travel + innerHeight}px`;
-      frame();
+      travel = Math.max(0, t.scrollWidth - innerWidth);
+      r.style.height = `${travel * 1.15 + innerHeight}px`; // a little extra scroll so each card can be read
+      kick();
+    };
+    const target = () => {
+      const p = Math.min(Math.max(-r.getBoundingClientRect().top / Math.max(1, r.offsetHeight - innerHeight), 0), 1);
+      return { p, x: p * travel };
     };
     const frame = () => {
       raf = 0;
       if (!mq.matches) return;
-      const p = Math.min(Math.max(-r.getBoundingClientRect().top / Math.max(1, r.offsetHeight - innerHeight), 0), 1);
-      t.style.transform = `translate3d(${-p * travel}px, 0, 0)`;
-      b.style.scale = `${p} 1`;
-      document.documentElement.classList.toggle("walk-left", false);
+      const goal = target();
+      x += (goal.x - x) * 0.11;
+      if (Math.abs(goal.x - x) < 0.3) x = goal.x;
+      t.style.transform = `translate3d(${-x}px, 0, 0)`;
+      b.style.scale = `${goal.p} 1`;
+      const mid = innerWidth / 2;
+      let best = 0, bestD = Infinity;
+      cards.forEach((c, i) => {
+        const box = c.getBoundingClientRect();
+        const d = Math.abs(box.left + box.width / 2 - mid) / innerWidth;
+        if (d < bestD) { bestD = d; best = i; }
+        const k = Math.min(d * 1.6, 1);
+        c.style.transform = `scale(${1 - k * 0.08}) translateY(${k * 18}px)`;
+        c.style.opacity = String(1 - k * 0.45);
+      });
+      setAt(best + 1);
+      if (x !== goal.x || live) raf = requestAnimationFrame(frame);
     };
-    const on = () => (raf ||= requestAnimationFrame(frame));
+    const kick = () => (raf ||= requestAnimationFrame(frame));
+    const io = new IntersectionObserver(([e]) => { live = e.isIntersecting; if (live) kick(); });
+    io.observe(r);
     size();
     document.fonts?.ready.then(size);
     addEventListener("resize", size);
     addEventListener("depth", () => requestAnimationFrame(size));
-    addEventListener("scroll", on, { passive: true });
-    return () => { removeEventListener("resize", size); removeEventListener("scroll", on); cancelAnimationFrame(raf); };
+    addEventListener("scroll", kick, { passive: true });
+    return () => { io.disconnect(); removeEventListener("resize", size); removeEventListener("scroll", kick); cancelAnimationFrame(raf); };
   }, []);
 
   return (
     <div className="rail" ref={rail}>
       <div className="rail-stage">
         <div className="rail-track" ref={track} role="list" aria-label={label}>{children}</div>
-        <div className="rail-bar" aria-hidden="true"><span ref={bar} /></div>
+        <div className="rail-foot" aria-hidden="true">
+          <span>{at} of {count}</span>
+          <span className="rail-bar"><span ref={bar} /></span>
+          <span>Keep scrolling</span>
+        </div>
       </div>
     </div>
   );

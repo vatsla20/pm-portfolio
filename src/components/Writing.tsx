@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import Rail from "./Rail";
+import Morph from "./Morph";
 
 const articles = [
   {
@@ -87,27 +88,54 @@ const articles = [
 
 type Article = (typeof articles)[number];
 
+// Each document is restyled inside the reader so it reads in the site's own colours and face.
+const THEME = `
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap");
+html, body { background: #f4eee3 !important; color: #1c1a17 !important; }
+body, body *:not(svg):not(svg *):not(code):not(pre):not(pre *) { font-family: "Bricolage Grotesque", system-ui, sans-serif !important; }
+body *:not(svg):not(svg *) { background-color: transparent !important; color: inherit !important; box-shadow: none !important; text-shadow: none !important; border-color: rgba(28, 26, 23, 0.14) !important; }
+body { max-width: 760px !important; margin: 0 auto !important; padding: 40px 28px 80px !important; line-height: 1.65 !important; font-size: 17px !important; }
+h1 { font-size: 2.4rem !important; line-height: 1.05 !important; letter-spacing: -0.03em !important; font-weight: 800 !important; }
+h2 { font-size: 1.6rem !important; letter-spacing: -0.02em !important; color: #c2571a !important; margin-top: 2em !important; }
+h3, h4 { color: #1c1a17 !important; letter-spacing: -0.01em !important; }
+a { color: #c2571a !important; }
+table { border-collapse: collapse !important; width: 100% !important; font-size: 15px !important; }
+th { background-color: #e0d6c5 !important; }
+td, th { border: 1px solid rgba(28, 26, 23, 0.14) !important; padding: 8px 10px !important; }
+tr:nth-child(even) td { background-color: #ebe3d5 !important; }
+blockquote { border-left: 3px solid #c2571a !important; padding-left: 16px !important; }
+pre, code { background-color: #ebe3d5 !important; border-radius: 6px !important; }
+.back-button, .back-link, .close-button, button[onclick*="close"] { display: none !important; }
+`;
+
 export default function Writing() {
   const [open, setOpen] = useState<Article | null>(null);
   const dlg = useRef<HTMLDialogElement>(null);
   const read = (a: Article) => { setOpen(a); requestAnimationFrame(() => dlg.current?.showModal()); };
+  const theme = (e: React.SyntheticEvent<HTMLIFrameElement>) => {
+    const doc = e.currentTarget.contentDocument;
+    if (!doc) return;
+    const style = doc.createElement("style");
+    style.textContent = THEME;
+    doc.head.appendChild(style);
+  };
 
   return (
-    <section id="writing" className="sec" style={{ paddingLeft: 0, paddingRight: 0 }} data-say="Pick one. It opens right here.">
-      <div className="sec-head" style={{ padding: "0 var(--m)" }} data-reveal>
-        <h2 className="display h2">Writing &amp; Product Thinking</h2>
+    <section id="writing" className="band on-dark" data-say="Pick one. It opens right here.">
+      <div className="wrap sec-head" style={{ marginBottom: 0 }}>
+        <Morph as="h2" text="Writing & Product Thinking" className="h2" />
         <p>
           Demonstrating how I think about products — teardowns, strategy pieces, and frameworks. The Splitwise pieces form one connected case study:
           discovery → competitive teardown → PRD → prioritized roadmap → stakeholder alignment.
         </p>
       </div>
-      <Rail label="Writing">
+      <Rail label="Writing" count={articles.length}>
         {articles.map((article) => (
           <button key={article.title} type="button" className="doc" role="listitem" onClick={() => read(article)}>
-            <span className="tag-row"><span className="badge">{article.type}</span><span className="badge ghost">{article.status}</span></span>
+            <span className="chips"><span className="badge">{article.type}</span><span className="badge ghost">{article.status}</span></span>
             <span>
-              <span className="t" style={{ display: "block" }}>{article.title}</span>
-              <span className="muted d60" style={{ display: "block", marginTop: 12, fontSize: 15 }}>{article.description}</span>
+              <span className="t">{article.title}</span>
+              <span className="doc-d d60">{article.description}</span>
             </span>
             <span className="open-hint">Read it here <span className="arrow" aria-hidden="true">→</span></span>
           </button>
@@ -117,13 +145,13 @@ export default function Writing() {
         {open && (
           <>
             <div className="reader-top">
-              <p className="t">{open.title}</p>
-              <div style={{ display: "flex", gap: 6 }}>
-                <a className="btn" href={open.link} target="_blank" rel="noopener">New tab</a>
-                <form method="dialog"><button className="btn">Close</button></form>
+              <p className="t"><span className="k">{open.type}</span>{open.title}</p>
+              <div style={{ display: "flex", gap: 8 }}>
+                <a className="btn" href={open.link} target="_blank" rel="noopener"><span>New tab</span></a>
+                <form method="dialog"><button className="btn"><span>Close</span></button></form>
               </div>
             </div>
-            <div className="reader-screen"><iframe src={open.link} title={open.title} /></div>
+            <iframe src={open.link} title={open.title} onLoad={theme} />
           </>
         )}
       </dialog>

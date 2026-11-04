@@ -1,4 +1,5 @@
 import Rail from "./Rail";
+import Morph from "./Morph";
 
 const projects = [
   {
@@ -65,22 +66,22 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="sec" style={{ paddingLeft: 0, paddingRight: 0 }} data-say="Keep scrolling. The projects slide past sideways.">
-      <div className="sec-head" style={{ padding: "0 var(--m)" }} data-reveal>
-        <h2 className="display h2">Featured Projects</h2>
+    <section id="projects" className="band on-dark" data-say="Keep scrolling. The projects glide past.">
+      <div className="wrap sec-head" style={{ marginBottom: 0 }}>
+        <Morph as="h2" text="Featured Projects" className="h2" />
         <p>Case studies demonstrating product thinking, execution, and impact. Each project highlights a different PM skill set.</p>
       </div>
-      <Rail label="Projects">
+      <Rail label="Projects" count={projects.length}>
         {projects.map((project) => (
           <article key={project.title} className="project" role="listitem">
             <div className="project-top">
               <span className="badge">{project.domain}</span>
-              <span className="badge ghost">{project.role}</span>
+              <span className={`badge ${project.role.includes("Winner") ? "hot" : "ghost"}`}>{project.role}</span>
             </div>
             <h3>{project.title}</h3>
             <p className="outcome">{project.outcome}</p>
             <p className="desc dfull">{project.description}</p>
-            <div className="tag-row d60">
+            <div className="chips d60">
               {project.tags.map((tag) => <span key={tag} className="chip">{tag}</span>)}
             </div>
           </article>
