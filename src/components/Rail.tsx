@@ -5,12 +5,14 @@ import { useEffect, useRef, useState } from "react";
 // jumping with it, and each card grows and brightens as it reaches the centre.
 export default function Rail({ children, label, count }: { children: React.ReactNode; label: string; count: number }) {
   const rail = useRef<HTMLDivElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const bar = useRef<HTMLSpanElement>(null);
   const [at, setAt] = useState(1);
 
   useEffect(() => {
-    const r = rail.current!, t = track.current!, b = bar.current!;
+    const r = rail.current!, t = track.current!, b = bar.current!, st = stage.current!;
+    let TOP = 96;
     const cards = [...t.children] as HTMLElement[];
     const mq = matchMedia("(min-width: 861px) and (prefers-reduced-motion: no-preference)");
     let raf = 0, travel = 0, x = 0, live = false;
@@ -18,11 +20,13 @@ export default function Rail({ children, label, count }: { children: React.React
     const size = () => {
       if (!mq.matches) { r.style.height = ""; return; }
       travel = Math.max(0, t.scrollWidth - innerWidth);
-      r.style.height = `${travel * 1.15 + innerHeight}px`; // a little extra scroll so each card can be read
+      TOP = Math.max(96, (innerHeight - st.offsetHeight) / 2 + 30); // sit in the middle of the screen, whatever its height
+      st.style.top = `${TOP}px`;
+      r.style.height = `${travel * 1.15 + st.offsetHeight}px`; // a little extra scroll so each card can be read
       kick();
     };
     const target = () => {
-      const p = Math.min(Math.max(-r.getBoundingClientRect().top / Math.max(1, r.offsetHeight - innerHeight), 0), 1);
+      const p = Math.min(Math.max((TOP - r.getBoundingClientRect().top) / Math.max(1, r.offsetHeight - st.offsetHeight), 0), 1);
       return { p, x: p * travel };
     };
     const frame = () => {
@@ -59,7 +63,7 @@ export default function Rail({ children, label, count }: { children: React.React
 
   return (
     <div className="rail" ref={rail}>
-      <div className="rail-stage">
+      <div className="rail-stage" ref={stage}>
         <div className="rail-track" ref={track} role="list" aria-label={label}>{children}</div>
         <div className="rail-foot" aria-hidden="true">
           <span>{at} of {count}</span>

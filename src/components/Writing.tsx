@@ -90,11 +90,12 @@ type Article = (typeof articles)[number];
 
 // Each document is restyled inside the reader so it reads in the site's own colours and face.
 const THEME = `
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Manrope:wght@400..800&display=swap");
 html, body { background: #f4eee3 !important; color: #1c1a17 !important; }
-body, body *:not(svg):not(svg *):not(code):not(pre):not(pre *) { font-family: "Bricolage Grotesque", system-ui, sans-serif !important; }
+body, body *:not(svg):not(svg *):not(code):not(pre):not(pre *) { font-family: "Manrope", system-ui, sans-serif !important; }
 body *:not(svg):not(svg *) { background-color: transparent !important; color: inherit !important; box-shadow: none !important; text-shadow: none !important; border-color: rgba(28, 26, 23, 0.14) !important; }
 body { max-width: 760px !important; margin: 0 auto !important; padding: 40px 28px 80px !important; line-height: 1.65 !important; font-size: 17px !important; }
+h1, h2 { font-family: "Fraunces", Georgia, serif !important; }
 h1 { font-size: 2.4rem !important; line-height: 1.05 !important; letter-spacing: -0.03em !important; font-weight: 800 !important; }
 h2 { font-size: 1.6rem !important; letter-spacing: -0.02em !important; color: #c2571a !important; margin-top: 2em !important; }
 h3, h4 { color: #1c1a17 !important; letter-spacing: -0.01em !important; }

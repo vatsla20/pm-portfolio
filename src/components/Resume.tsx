@@ -75,7 +75,8 @@ const certifications = [
 const split = (period: string) => {
   const [from, to] = period.split("–").map((x) => x.trim());
   const year = (x: string) => x.match(/\d{4}/)?.[0] ?? x;
-  return { big: `${year(from)}${to ? ` – ${to === "Present" ? "now" : year(to)}` : ""}`, small: period };
+  const end = to === "Present" ? "now" : to && year(to);
+  return { big: end && end !== year(from) ? `${year(from)} – ${end}` : year(from), small: period };
 };
 
 export default function Resume() {

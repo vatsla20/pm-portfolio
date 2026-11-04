@@ -72,14 +72,18 @@ export default function Guide() {
   const [say, setSay] = useState("Hi! Pick how long you have, I’ll keep up.");
   const [shown, setShown] = useState("");
   const [state, setState] = useState({ walk: false, left: false, point: false, wave: false });
+  const [quiet, setQuiet] = useState(false);
   const timers = useRef<number[]>([]);
 
   // type the line out, one character at a time
   useEffect(() => {
     timers.current.forEach(clearTimeout);
+    timers.current = [];
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) { setShown(say); return; }
     setShown("");
-    timers.current = [...say].map((_, i) => window.setTimeout(() => setShown(say.slice(0, i + 1)), 22 * i));
+    setQuiet(false);
+    timers.current.push(window.setTimeout(() => setQuiet(true), 22 * say.length + 3800));
+    timers.current.push(...[...say].map((_, i) => window.setTimeout(() => setShown(say.slice(0, i + 1)), 22 * i)));
     setState((s) => ({ ...s, wave: true }));
     timers.current.push(window.setTimeout(() => setState((s) => ({ ...s, wave: false })), 1700));
   }, [say]);
@@ -105,7 +109,7 @@ export default function Guide() {
   }, []);
 
   const typing = shown.length < say.length;
-  const cls = ["guide", state.walk && "walk", state.left && "left", state.point && "point", state.wave && "wave"].filter(Boolean).join(" ");
+  const cls = ["guide", state.walk && "walk", state.left && "left", state.point && "point", state.wave && "wave", quiet && "quiet"].filter(Boolean).join(" ");
   return (
     <div className={cls} aria-hidden="true">
       <div className="guide-say">

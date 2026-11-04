@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque } from "next/font/google";
+import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Runtime from "@/components/Runtime";
 import Swarm from "@/components/Swarm";
 import Guide from "@/components/Guide";
 
-const bricolage = Bricolage_Grotesque({ variable: "--font-bricolage", subsets: ["latin"], axes: ["opsz", "wdth"] });
+const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], style: ["normal", "italic"], axes: ["opsz", "SOFT", "WONK"] });
+const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"] });
 
 // Tech faces for the letter flips, cut down to the alphabet so they weigh a few KB.
 const TECH = "https://fonts.googleapis.com/css2?family=Doto:wght@800&family=Major+Mono+Display&family=Orbitron:wght@800&family=Silkscreen:wght@700&family=VT323&display=swap&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz%26";
@@ -22,7 +23,7 @@ const boot = `try{var d=document.documentElement;d.classList.add('js');d.dataset
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={bricolage.variable} data-depth="full" suppressHydrationWarning>
+    <html lang="en" className={`${fraunces.variable} ${manrope.variable}`} data-depth="full" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: boot }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
