@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="grid">
         <div><span>Site</span><a href="/#thinking">Thinking</a><a href="/#work">Work</a><a href="/#writing">Writing</a><a href="/#contact">Contact</a></div>
         <div><span>Elsewhere</span><a href={person.linkedin}>LinkedIn</a><a href={`mailto:${person.email}`}>Email</a><a href={person.resume}>Résumé</a></div>
-        <div><span>Work</span>{projects.slice(0, 4).map((p) => <a key={p.slug} href={`/work/${p.slug}`}>{p.name}</a>)}</div>
+        <div><span>Work</span>{projects.map((p) => <a key={p.slug} href={`/work/${p.slug}`}>{p.name}</a>)}</div>
         <div className="credits">
           <span>Photographs</span>
           {credits.map((c) => (

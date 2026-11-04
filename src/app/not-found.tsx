@@ -1,4 +1,6 @@
 import { ThinkingOrb } from "@/components/Orb";
+export const metadata = { title: "Not in context, Vatsla Khurana" };
+
 
 export default function NotFound() {
   return (

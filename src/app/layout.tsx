@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://vatsla-khurana.vercel.app"),
   title: "Vatsla Khurana, product manager for AI and platforms",
   description: person.line,
+  alternates: { canonical: "/" },
   openGraph: { title: "Vatsla Khurana", description: person.line, images: ["/img/flock-1.jpg"] },
 };
 

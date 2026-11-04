@@ -1026,7 +1026,7 @@ POST   /webhooks/razorpay       - Payment notifications
 
 **Document Status:** ✅ Approved for Development  
 **Sign-Off:**
-- Product Manager: [Your Name]  
+- Product Manager: Vatsla Khurana  
 - Engineering Lead: [Pending]  
 - Design Lead: [Pending]  
 

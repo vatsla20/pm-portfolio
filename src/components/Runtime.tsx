@@ -41,6 +41,10 @@ export default function Runtime() {
     const hero = document.querySelector(".hero");
     const overHero = new IntersectionObserver(([e]) => html.classList.toggle("over-hero", e.isIntersecting), { rootMargin: "0px 0px -94% 0px" });
     if (hero) overHero.observe(hero);
+    // The guide steps aside when the footer's name arrives.
+    const foot = document.querySelector("footer");
+    const atFoot = new IntersectionObserver(([e]) => html.classList.toggle("at-foot", e.isIntersecting), { threshold: 0.15 });
+    if (foot) atFoot.observe(foot);
 
     // Entrances, once per block.
     const reveal = new IntersectionObserver(
@@ -55,6 +59,7 @@ export default function Runtime() {
       document.fonts?.removeEventListener("loadingdone", fit);
       chapters.disconnect();
       overHero.disconnect();
+      atFoot.disconnect();
       reveal.disconnect();
     };
   }, []);

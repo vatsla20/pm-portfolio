@@ -18,6 +18,7 @@ export default function Swarm() {
     let px = innerWidth * 0.75, py = innerHeight * 0.7, lastMove = 0;
     let targets: { x: number; y: number }[] = [];
     let color = "#ff2e88", raf = 0, tick = 0;
+    const nb: number[][] = [];
 
     const move = (e: PointerEvent) => {
       px = e.clientX; py = e.clientY; lastMove = performance.now();
@@ -40,14 +41,16 @@ export default function Swarm() {
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
       g.clearRect(0, 0, innerWidth, innerHeight);
       g.fillStyle = color;
+      g.globalAlpha = 0.55; // the flock stays behind the reading, never on top of it
       for (let i = 0; i < N; i++) {
         const p = b[i];
         // target: a related item, or the pointer; when idle, a slow loop around where the pointer rested
         let tx = px, ty = py;
         if (targets.length) { const t = targets[i % targets.length]; tx = t.x; ty = t.y; }
         else if (idle) { const a = now / 1400 + (i / N) * Math.PI * 2; tx += Math.cos(a) * 70; ty += Math.sin(a * 1.3) * 40; }
-        // seven nearest neighbours only
-        const near = b.map((q, j) => ({ j, d: (q.x - p.x) ** 2 + (q.y - p.y) ** 2 })).sort((m, n) => m.d - n.d).slice(1, K + 1);
+        // seven nearest neighbours only, re-chosen every few frames (birds don't re-count every instant)
+        if (tick % 6 === i % 6 || !nb[i]) nb[i] = b.map((q, j) => ({ j, d: (q.x - p.x) ** 2 + (q.y - p.y) ** 2 })).sort((m, n) => m.d - n.d).slice(1, K + 1).map((n) => n.j);
+        const near = nb[i].map((j) => ({ j, d: (b[j].x - p.x) ** 2 + (b[j].y - p.y) ** 2 }));
         let ax = 0, ay = 0, cx = 0, cy = 0, sx = 0, sy = 0;
         for (const { j, d } of near) {
           const q = b[j];

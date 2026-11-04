@@ -43,6 +43,7 @@ export default function Budget({ line, scope = "main" }: { line?: string; scope?
   function pick(v: string) {
     setDepth(v);
     document.documentElement.dataset.depth = v;
+    document.documentElement.classList.add("rebudget");
     try { localStorage.setItem("depth", v); } catch {}
     dispatchEvent(new Event("depth"));
   }

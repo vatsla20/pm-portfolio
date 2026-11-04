@@ -13,7 +13,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const p = projects.find((x) => x.slug === slug);
-  return p ? { title: `${p.name}, Vatsla Khurana`, description: p.t30 } : {};
+  return p ? { title: `${p.name}, Vatsla Khurana`, description: p.t30, alternates: { canonical: `/work/${slug}` } } : {};
 }
 
 export default async function Case({ params }: { params: Promise<{ slug: string }> }) {
@@ -33,7 +33,7 @@ export default async function Case({ params }: { params: Promise<{ slug: string 
           <p className="small muted" style={{ marginTop: 10 }}>{p.where}, {p.when}</p>
           <div style={{ marginTop: 32 }}><Budget scope="main" /></div>
           <div className="panorama">
-            <img src={photo.file} alt={photo.title} width={1800} height={1200} fetchPriority="high" />
+            <img src={photo.file} srcSet={`${photo.file.replace(".jpg", "-900.jpg")} 900w, ${photo.file} 1600w`} sizes="100vw" alt={photo.title} width={1800} height={1200} fetchPriority="high" />
           </div>
           <div className="grid">
             <div className="case-l">

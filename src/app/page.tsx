@@ -28,7 +28,7 @@ export default function Home() {
       <main id="main">
         <section className="hero" data-chapter="sky" data-say="Pick your time. I’ll pack the page to fit." aria-label="Introduction">
           <Loader total={wordsOfWork()} />
-          <img src="/img/flock-1.jpg" alt="A murmuration of rosy starlings over Kankaria Lake, Ahmedabad, at dusk" width={2000} height={1500} fetchPriority="high" />
+          <img src="/img/flock-1.jpg" srcSet="/img/flock-1-900.jpg 900w, /img/flock-1.jpg 1600w" sizes="100vw" alt="A murmuration of rosy starlings over Kankaria Lake, Ahmedabad, at dusk" width={1600} height={1200} fetchPriority="high" />
           <div className="hero-text">
             <Budget line={person.line} />
             <div>
@@ -51,7 +51,7 @@ export default function Home() {
             </div>
           </div>
           <div className="panorama">
-            <img src="/img/flock-2.jpg" alt="A loose flock of birds crossing the sky over Basai Wetland, Gurgaon" width={2000} height={1328} loading="lazy" />
+            <img src="/img/flock-2.jpg" srcSet="/img/flock-2-900.jpg 900w, /img/flock-2.jpg 1600w" sizes="100vw" alt="A loose flock of birds crossing the sky over Basai Wetland, Gurgaon" width={2000} height={1328} loading="lazy" />
           </div>
         </section>
 
@@ -93,9 +93,8 @@ export default function Home() {
           <h2 id="path-h">Every role left a tool behind</h2>
           <div className="grid">
             <div className="path-img">
-              <img src="/img/flock-6.jpg" alt="A murmuration shaped like a wave over the reeds at Fairburn Ings, at dusk" width={1200} height={1600} loading="lazy" />
+              <img src="/img/flock-6.jpg" srcSet="/img/flock-6-900.jpg 900w, /img/flock-6.jpg 1600w" sizes="(max-width: 900px) 60vw, 30vw" alt="A murmuration shaped like a wave over the reeds at Fairburn Ings, at dusk" width={1200} height={1600} loading="lazy" />
             </div>
-            <p className="path-word">Path</p>
             <ul className="path-rows">
               {path.map((r, i) => (
                 <li key={r.what} className={i > 7 ? "dfull" : i > 3 ? "d60" : undefined}>
