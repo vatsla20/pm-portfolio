@@ -71,8 +71,6 @@ export function Figure() {
             <ellipse cx="48.5" cy="47" rx="3.2" ry="1.8" fill={LIP} opacity="0.18" />
             <ellipse cx="71.5" cy="47" rx="3.2" ry="1.8" fill={LIP} opacity="0.18" />
           </g>
-          {/* hair that falls in front of her left shoulder */}
-          <path className="g-hair" d="M75 42c7 18 9 48 6 78-4-2-7-6-8-11 2-22 1-46-4-62z" fill={HAIR} />
           {/* front arm with a tablet */}
           <g className="g-arm a">
             <path d="M40 74c-6 2-9 6-10 12l-3 26c-1 6 3 8 6 3l6-24z" fill={BLAZER} />

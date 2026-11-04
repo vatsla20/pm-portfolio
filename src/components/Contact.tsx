@@ -15,7 +15,6 @@ export default function Contact() {
           <a href="mailto:vatsla20.k@gmail.com" style={{ "--n": 0 } as React.CSSProperties}><b>Email</b><span>vatsla20.k@gmail.com</span></a>
           <a href="https://www.linkedin.com/in/vatsla-khurana-025845214/" target="_blank" rel="noopener noreferrer" style={{ "--n": 1 } as React.CSSProperties}><b>LinkedIn</b><span>/in/vatsla-khurana</span></a>
         </div>
-        <p className="colophon">Portfolio built with Next.js, deployed on Vercel</p>
       </div>
     </section>
   );
