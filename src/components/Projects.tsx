@@ -1,3 +1,6 @@
+import Rail from "./Rail";
+import Morph from "./Morph";
+
 const projects = [
   {
     title: "AI Anomaly Detection & Forecasting Platform — 0 to 1",
@@ -13,7 +16,7 @@ const projects = [
     title: "Invent for Customer — AI Candidate Verification System",
     outcome:
       "Won SAP's company-wide Invent for Customer hackathon — judged on customer impact, feasibility, and innovation",
-    role: "Led · 🏆 Winner",
+    role: "Led · Winner",
     domain: "HR Tech / GenAI",
     tags: ["Customer discovery", "Problem framing", "GenAI", "0-to-1 execution", "Business case", "Patent pending"],
     description:
@@ -47,7 +50,7 @@ const projects = [
     domain: "Developer Tools / AI",
     tags: ["AI tooling", "LLM prompting", "RSS/feed parsing", "React", "Self-initiated", "Developer productivity"],
     description:
-      "The problem: staying current on AI and product news requires scanning dozens of sites daily — noisy, repetitive, and time-consuming. I built a fully local pipeline: a shell script fetches RSS/Atom feeds, Hacker News, Reddit, YouTube, and company blogs from a curated source list; pipes all items through a Claude-powered synthesis prompt that deduplicates overlapping stories and writes neutral multi-source briefs; and writes the result as a flat JSON file consumed by a React dashboard. The pipeline runs on zero API keys and zero backend — just curl, jq, and the local claude CLI. The dashboard shows animated brief cards filterable by topic (AI in products / product strategy / business moves) with source-link chips and inline video embeds. A refresh button re-runs the full pipeline live.",
+      "The problem: staying current on AI and product news requires scanning dozens of sites daily — noisy, repetitive, and time-consuming. I built a fully local pipeline: a shell script fetches RSS/Atom feeds, Hacker News, Reddit, YouTube, and company blogs from a curated source list; pipes all items through an LLM-powered synthesis prompt that deduplicates overlapping stories and writes neutral multi-source briefs; and writes the result as a flat JSON file consumed by a React dashboard. The pipeline runs on zero API keys and zero backend — just curl, jq, and a local LLM CLI. The dashboard shows animated brief cards filterable by topic (AI in products / product strategy / business moves) with source-link chips and inline video embeds. A refresh button re-runs the full pipeline live.",
   },
   {
     title: "LLM + RAG Conversational Analytics Tool for API Management",
@@ -63,59 +66,27 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-24 px-6">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-2">Featured Projects</h2>
-        <div className="w-16 h-1 bg-accent rounded mb-4" />
-        <p className="text-muted mb-10">
-          {/* PLACEHOLDER: Customize intro */}
-          Case studies demonstrating product thinking, execution, and impact.
-          Each project highlights a different PM skill set.
-        </p>
-
-        <div className="space-y-8">
-          {projects.map((project, index) => (
-            <div
-              key={index}
-              className="group p-6 rounded-xl bg-surface border border-border hover:border-accent/40 transition-all duration-300 hover:glow"
-            >
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground group-hover:text-accent-light transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-accent-light font-medium mt-1">
-                    {project.outcome}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  <span className="px-2 py-0.5 text-xs rounded bg-accent/10 text-accent-light border border-accent/20">
-                    {project.domain}
-                  </span>
-                  <span className="px-2 py-0.5 text-xs rounded bg-surface-light text-muted">
-                    {project.role}
-                  </span>
-                </div>
-              </div>
-
-              <p className="text-sm text-muted leading-relaxed mb-4">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2 py-1 text-xs rounded bg-surface-light text-muted"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+    <section id="projects" className="band on-dark" data-say="Keep scrolling. The projects glide past.">
+      <div className="wrap sec-head" style={{ marginBottom: 0 }}>
+        <Morph as="h2" text="Featured Projects" className="h2" />
+        <p>Case studies demonstrating product thinking, execution, and impact. Each project highlights a different PM skill set.</p>
       </div>
+      <Rail label="Projects" count={projects.length}>
+        {projects.map((project) => (
+          <article key={project.title} className="project" role="listitem">
+            <div className="project-top">
+              <span className="badge">{project.domain}</span>
+              <span className={`badge ${project.role.includes("Winner") ? "hot" : "ghost"}`}>{project.role}</span>
+            </div>
+            <h3>{project.title}</h3>
+            <p className="outcome">{project.outcome}</p>
+            <p className="desc dfull">{project.description}</p>
+            <div className="chips d60">
+              {project.tags.map((tag) => <span key={tag} className="chip">{tag}</span>)}
+            </div>
+          </article>
+        ))}
+      </Rail>
     </section>
   );
 }

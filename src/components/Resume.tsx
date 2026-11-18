@@ -1,3 +1,7 @@
+"use client";
+import { useEffect, useRef } from "react";
+import Morph from "./Morph";
+
 const experience = [
   {
     title: "Full Stack Developer",
@@ -67,100 +71,87 @@ const certifications = [
   "Google Agentic AI Hackathon",
 ];
 
-export default function Resume() {
-  return (
-    <section id="resume" className="py-24 px-6 bg-surface/50">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-3xl font-bold">Resume</h2>
-          <a
-            href="/resume.pdf"
-            download="Vatsla_Khurana_Resume.pdf"
-            className="text-sm text-accent hover:text-accent-light transition-colors flex items-center gap-1"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              />
-            </svg>
-            Download PDF
-          </a>
-        </div>
-        <div className="w-16 h-1 bg-accent rounded mb-10" />
+// "July 2025 – Present" → year big, months small, so the dates are the first thing the eye lands on
+const split = (period: string) => {
+  const [from, to] = period.split("–").map((x) => x.trim());
+  const year = (x: string) => x.match(/\d{4}/)?.[0] ?? x;
+  const end = to === "Present" ? "now" : to && year(to);
+  return { big: end && end !== year(from) ? `${year(from)} – ${end}` : year(from), small: period };
+};
 
-        <div className="mb-12">
-          <h3 className="text-sm font-semibold text-accent-light uppercase tracking-wider mb-6">
-            Experience
-          </h3>
-          <div className="space-y-8">
-            {experience.map((job, index) => (
-              <div key={index} className="relative pl-6 border-l border-border">
-                <div className="absolute left-0 top-1 w-2.5 h-2.5 rounded-full bg-accent -translate-x-[5.5px]" />
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                  <h4 className="text-base font-semibold text-foreground">
-                    {job.title}
-                  </h4>
-                  <span className="text-xs text-muted">{job.period}</span>
-                </div>
-                <p className="text-sm text-accent-light mb-3">{job.company}</p>
-                <ul className="space-y-2">
+export default function Resume() {
+  const line = useRef<HTMLDivElement>(null);
+  const fill = useRef<HTMLSpanElement>(null);
+
+  // The line fills as you scroll; each role lights when the fill reaches its dot.
+  useEffect(() => {
+    const el = line.current!, f = fill.current!;
+    const jobs = [...el.querySelectorAll<HTMLElement>(".job")];
+    let raf = 0, shown = 0;
+    const frame = () => {
+      const r = el.getBoundingClientRect();
+      const reach = innerHeight * 0.62 - r.top;
+      const goal = Math.min(Math.max(reach / r.height, 0), 1);
+      shown += (goal - shown) * 0.14;
+      if (Math.abs(goal - shown) < 0.001) shown = goal;
+      f.style.scale = `1 ${shown}`;
+      jobs.forEach((j) => j.classList.toggle("lit", j.offsetTop + 10 <= shown * r.height));
+      raf = shown === goal ? 0 : requestAnimationFrame(frame);
+    };
+    const on = () => (raf ||= requestAnimationFrame(frame));
+    on();
+    addEventListener("scroll", on, { passive: true });
+    addEventListener("resize", on);
+    addEventListener("depth", on);
+    return () => { removeEventListener("scroll", on); removeEventListener("resize", on); cancelAnimationFrame(raf); };
+  }, []);
+
+  return (
+    <section id="resume" className="wrap sec" data-say="Watch the line. Every role lights up as you pass it.">
+      <div className="sec-head" style={{ maxWidth: "none", flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap" }}>
+        <Morph as="h2" text="Resume" className="h2" />
+        <a href="/resume.pdf" download="Vatsla_Khurana_Resume.pdf" className="btn primary"><span>Download PDF ↓</span></a>
+      </div>
+
+      <h3 className="sr">Experience</h3>
+      <div className="timeline" ref={line}>
+        <div className="track" aria-hidden="true"><span className="fill" ref={fill} /></div>
+        {experience.map((job) => {
+          const d = split(job.period);
+          return (
+            <div key={job.company + job.period} className="job">
+              <p className="when"><b>{d.big}</b><span>{d.small}</span></p>
+              <span className="dot" aria-hidden="true" />
+              <div className="body">
+                <h4>{job.title}</h4>
+                <p className="company">{job.company}</p>
+                <ul>
                   {job.bullets.map((bullet, i) => (
-                    <li
-                      key={i}
-                      className="text-sm text-muted leading-relaxed flex gap-2"
-                    >
-                      <span className="text-accent mt-1 shrink-0">›</span>
-                      {bullet}
-                    </li>
+                    <li key={i} className={i > 1 ? "dfull" : i > 0 ? "d60" : undefined}>{bullet}</li>
                   ))}
                 </ul>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Education & Certs in 2 columns */}
-        <div className="grid md:grid-cols-2 gap-8">
-          <div>
-            <h3 className="text-sm font-semibold text-accent-light uppercase tracking-wider mb-4">
-              Education
-            </h3>
-            {education.map((edu, index) => (
-              <div key={index} className="p-4 rounded-lg bg-surface border border-border">
-                <h4 className="text-sm font-semibold text-foreground">
-                  {edu.degree}
-                </h4>
-                <p className="text-sm text-muted">
-                  {edu.school} • {edu.year}
-                </p>
-                <p className="text-xs text-muted/70 mt-1">{edu.note}</p>
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold text-accent-light uppercase tracking-wider mb-4">
-              Certifications
-            </h3>
-            <div className="space-y-2">
-              {certifications.map((cert, index) => (
-                <div
-                  key={index}
-                  className="p-3 rounded-lg bg-surface border border-border text-sm text-muted"
-                >
-                  {cert}
-                </div>
-              ))}
             </div>
-          </div>
+          );
+        })}
+      </div>
+
+      <div className="edu">
+        <div data-stagger>
+          <h3>Education</h3>
+          {education.map((edu, i) => (
+            <div key={edu.degree} className="item" style={{ "--n": i + 1 } as React.CSSProperties}>
+              <b>{edu.degree}</b>
+              <p className="small dim">{edu.school} • {edu.year}</p>
+              <p className="note">{edu.note}</p>
+            </div>
+          ))}
+        </div>
+        <div data-stagger>
+          <h3>Certifications</h3>
+          {certifications.map((cert, i) => (
+            <div key={cert} className={`item${i > 3 ? " d60" : ""}`} style={{ "--n": i + 1 } as React.CSSProperties}>{cert}</div>
+          ))}
         </div>
       </div>
     </section>

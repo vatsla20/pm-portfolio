@@ -1,3 +1,8 @@
+"use client";
+import { useRef, useState } from "react";
+import Rail from "./Rail";
+import Morph from "./Morph";
+
 const articles = [
   {
     title: "Splitwise — Customer Discovery Study",
@@ -81,72 +86,76 @@ const articles = [
   },
 ];
 
-const typeColors: Record<string, string> = {
-  "Product Teardown": "bg-purple-500/10 text-purple-400 border-purple-500/20",
-  Strategy: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  Opinion: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-  PRD: "bg-green-500/10 text-green-400 border-green-500/20",
-  Framework: "bg-rose-500/10 text-rose-400 border-rose-500/20",
-  "User Research": "bg-teal-500/10 text-teal-400 border-teal-500/20",
-};
+type Article = (typeof articles)[number];
+
+// Each document is restyled inside the reader so it reads in the site's own colours and face.
+const THEME = `
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Manrope:wght@400..800&display=swap");
+html, body { background: #f4eee3 !important; color: #1c1a17 !important; }
+body, body *:not(svg):not(svg *):not(code):not(pre):not(pre *) { font-family: "Manrope", system-ui, sans-serif !important; }
+body *:not(svg):not(svg *) { background-color: transparent !important; color: inherit !important; box-shadow: none !important; text-shadow: none !important; border-color: rgba(28, 26, 23, 0.14) !important; }
+body { max-width: 760px !important; margin: 0 auto !important; padding: 40px 28px 80px !important; line-height: 1.65 !important; font-size: 17px !important; }
+h1, h2 { font-family: "Fraunces", Georgia, serif !important; }
+h1 { font-size: 2.4rem !important; line-height: 1.05 !important; letter-spacing: -0.03em !important; font-weight: 800 !important; }
+h2 { font-size: 1.6rem !important; letter-spacing: -0.02em !important; color: #c2571a !important; margin-top: 2em !important; }
+h3, h4 { color: #1c1a17 !important; letter-spacing: -0.01em !important; }
+a { color: #c2571a !important; }
+table { border-collapse: collapse !important; width: 100% !important; font-size: 15px !important; }
+th { background-color: #e0d6c5 !important; }
+td, th { border: 1px solid rgba(28, 26, 23, 0.14) !important; padding: 8px 10px !important; }
+tr:nth-child(even) td { background-color: #ebe3d5 !important; }
+blockquote { border-left: 3px solid #c2571a !important; padding-left: 16px !important; }
+pre, code { background-color: #ebe3d5 !important; border-radius: 6px !important; }
+.back-button, .back-link, .close-button, button[onclick*="close"] { display: none !important; }
+`;
 
 export default function Writing() {
+  const [open, setOpen] = useState<Article | null>(null);
+  const dlg = useRef<HTMLDialogElement>(null);
+  const read = (a: Article) => { setOpen(a); requestAnimationFrame(() => dlg.current?.showModal()); };
+  const theme = (e: React.SyntheticEvent<HTMLIFrameElement>) => {
+    const doc = e.currentTarget.contentDocument;
+    if (!doc) return;
+    const style = doc.createElement("style");
+    style.textContent = THEME;
+    doc.head.appendChild(style);
+  };
+
   return (
-    <section id="writing" className="py-24 px-6">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-2">Writing & Product Thinking</h2>
-        <div className="w-16 h-1 bg-accent rounded mb-4" />
-        <p className="text-muted mb-10">
-          Demonstrating how I think about products — teardowns, strategy pieces,
-          and frameworks. The Splitwise pieces form one connected case study:
-          discovery → competitive teardown → PRD → prioritized roadmap →
-          stakeholder alignment.
+    <section id="writing" className="band on-dark" data-say="Pick one. It opens right here.">
+      <div className="wrap sec-head" style={{ marginBottom: 0 }}>
+        <Morph as="h2" text="Writing & Product Thinking" className="h2" />
+        <p>
+          Demonstrating how I think about products — teardowns, strategy pieces, and frameworks. The Splitwise pieces form one connected case study:
+          discovery → competitive teardown → PRD → prioritized roadmap → stakeholder alignment.
         </p>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {articles.map((article, index) => {
-            const ArticleWrapper = article.link ? 'a' : 'article';
-            const wrapperProps = article.link
-              ? { href: article.link, target: "_blank", rel: "noopener noreferrer" }
-              : {};
-
-            return (
-              <ArticleWrapper
-                key={index}
-                {...wrapperProps}
-                className="group p-5 rounded-xl bg-surface border border-border hover:border-accent/40 transition-all duration-300 cursor-pointer"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span
-                    className={`px-2 py-0.5 text-xs rounded border ${typeColors[article.type] || "bg-surface-light text-muted"}`}
-                  >
-                    {article.type}
-                  </span>
-                  <span className="text-xs text-muted/60 italic">
-                    {article.status}
-                  </span>
-                </div>
-                <h3 className="text-base font-semibold text-foreground group-hover:text-accent-light transition-colors mb-2">
-                  {article.title}
-                  {article.link && (
-                    <svg
-                      className="inline-block ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  )}
-                </h3>
-                <p className="text-sm text-muted leading-relaxed">
-                  {article.description}
-                </p>
-              </ArticleWrapper>
-            );
-          })}
-        </div>
       </div>
+      <Rail label="Writing" count={articles.length}>
+        {articles.map((article) => (
+          <button key={article.title} type="button" className="doc" role="listitem" onClick={() => read(article)}>
+            <span className="chips"><span className="badge">{article.type}</span><span className="badge ghost">{article.status}</span></span>
+            <span>
+              <span className="t">{article.title}</span>
+              <span className="doc-d d60">{article.description}</span>
+            </span>
+            <span className="open-hint">Read it here <span className="arrow" aria-hidden="true">→</span></span>
+          </button>
+        ))}
+      </Rail>
+      <dialog ref={dlg} className="reader" aria-label={open?.title} onClose={() => setOpen(null)} onClick={(e) => e.target === dlg.current && dlg.current?.close()}>
+        {open && (
+          <>
+            <div className="reader-top">
+              <p className="t"><span className="k">{open.type}</span>{open.title}</p>
+              <div style={{ display: "flex", gap: 8 }}>
+                <a className="btn" href={open.link} target="_blank" rel="noopener"><span>New tab</span></a>
+                <form method="dialog"><button className="btn"><span>Close</span></button></form>
+              </div>
+            </div>
+            <iframe src={open.link} title={open.title} onLoad={theme} />
+          </>
+        )}
+      </dialog>
     </section>
   );
 }
